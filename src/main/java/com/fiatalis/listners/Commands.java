@@ -5,7 +5,10 @@ public enum Commands {
     CD("cd"),
     MKDIR("mkdir"),
     RM("rm"),
-    CAT("cat");
+    CAT("cat"),
+    PWD("pwd"),
+    START("start"),
+    STOP("stop");
 
     private final String commands;
 

@@ -1,28 +1,45 @@
 package com.fiatalis;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-@Slf4j
-public class EchoServer implements Runnable{
+public class EchoServer implements Runnable {
+    EventLoopGroup auth;
+    EventLoopGroup worker = new NioEventLoopGroup();
+    ConcurrentLinkedDeque<ChannelHandlerContext> users;
+
+
+    private static EchoServer instance;
+
     @Override
     public void run() {
-        EventLoopGroup auth = new NioEventLoopGroup(1);
-        EventLoopGroup worker = new NioEventLoopGroup();
-        //UserNameService userNameService = new UserNameService();
-        ConcurrentLinkedDeque<ChannelHandlerContext> users = new ConcurrentLinkedDeque<>();
+        instance = new EchoServer();
+        startServer();
+    }
+
+    public EchoServer() {
+    }
+
+    public static EchoServer getInstance() {
+        if (instance == null) {
+            instance = new EchoServer();
+        }
+        return instance;
+    }
+
+    public void startServer() {
+        auth = new NioEventLoopGroup(1);
+        worker = new NioEventLoopGroup();
+        users = new ConcurrentLinkedDeque<>();
+
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(auth, worker)
@@ -33,12 +50,12 @@ public class EchoServer implements Runnable{
                             socketChannel.pipeline().addLast(
                                     new ObjectEncoder(),
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null))
-                                   // new CloudMessageHandler()
+                                    // new CloudMessageHandler()
                             );
                         }
                     });
             ChannelFuture future = bootstrap.bind(8189).sync();
-            log.debug("Server started...");
+            System.out.println("Server started...");
             future.channel().closeFuture().sync(); // block
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -46,5 +63,11 @@ public class EchoServer implements Runnable{
             auth.shutdownGracefully();
             worker.shutdownGracefully();
         }
+    }
+
+    public void stopServer() {
+        auth.shutdownGracefully();
+        worker.shutdownGracefully();
+        System.out.println("Server stopped...");
     }
 }
