@@ -1,28 +1,31 @@
 package com.fiatalis;
 
+import com.fiatalis.utils.Utils;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-@Slf4j
-public class EchoServer implements Runnable{
+public class EchoServer extends Thread  {
+    private EventLoopGroup auth;
+    private EventLoopGroup worker;
+    private ConcurrentLinkedDeque<ChannelHandlerContext> users;
+    private ChannelFuture channelFuture;
+
+    {
+        auth = new NioEventLoopGroup(1);
+        worker = new NioEventLoopGroup();
+        users = new ConcurrentLinkedDeque<>();
+    }
+
     @Override
     public void run() {
-        EventLoopGroup auth = new NioEventLoopGroup(1);
-        EventLoopGroup worker = new NioEventLoopGroup();
-        //UserNameService userNameService = new UserNameService();
-        ConcurrentLinkedDeque<ChannelHandlerContext> users = new ConcurrentLinkedDeque<>();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(auth, worker)
@@ -33,18 +36,22 @@ public class EchoServer implements Runnable{
                             socketChannel.pipeline().addLast(
                                     new ObjectEncoder(),
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null))
-                                   // new CloudMessageHandler()
+                                    // new CloudMessageHandler()
                             );
                         }
                     });
-            ChannelFuture future = bootstrap.bind(8189).sync();
-            log.debug("Server started...");
-            future.channel().closeFuture().sync(); // block
+            channelFuture = bootstrap.bind(8189).sync();
+            System.out.println("Server started...");
+            Utils.addPrefix();
+            channelFuture.channel().closeFuture().sync(); // block
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             auth.shutdownGracefully();
             worker.shutdownGracefully();
+            System.out.println("Server stopped...");
+            Utils.addPrefix();
+            channelFuture.channel().disconnect();
         }
     }
 }
