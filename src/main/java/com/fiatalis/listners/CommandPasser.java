@@ -2,17 +2,11 @@ package com.fiatalis.listners;
 
 import com.fiatalis.EchoServer;
 
-import java.util.TreeMap;
+public class CommandPasser {
+    Thread thread = null;
 
-public class CommandPasser  {
-    Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            System.out.println("start server");
-        }
-    });
-
-    public void readerCommand(String s) throws IllegalArgumentException, InterruptedException{
+    public void readerCommand(String s) throws IllegalArgumentException {
+        if (s.equals("")) {return;}
         switch (Commands.valueOf(s.toUpperCase())) {
             case LS:
                 System.out.println("Список файлов");
@@ -30,6 +24,9 @@ public class CommandPasser  {
                 System.out.println("Прочитать файл");
                 break;
             case START:
+                if (thread == null) {
+                    thread = new Thread(new EchoServer(), "server");
+                }
                 if (thread.isAlive()) {
                     System.out.println("Already working");
                     break;
@@ -39,7 +36,7 @@ public class CommandPasser  {
             case STOP:
                 try {
                     thread.interrupt();
-                    System.out.println("Сервер остановлен");
+                    thread = null;
                 } catch (NullPointerException e) {
                     System.out.println("Please enter start");
                 }

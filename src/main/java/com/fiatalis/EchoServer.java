@@ -1,5 +1,6 @@
 package com.fiatalis;
 
+import com.fiatalis.utils.Utils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -11,35 +12,20 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class EchoServer implements Runnable {
-    EventLoopGroup auth;
-    EventLoopGroup worker = new NioEventLoopGroup();
-    ConcurrentLinkedDeque<ChannelHandlerContext> users;
+public class EchoServer extends Thread  {
+    private EventLoopGroup auth;
+    private EventLoopGroup worker;
+    private ConcurrentLinkedDeque<ChannelHandlerContext> users;
+    private ChannelFuture channelFuture;
 
-
-    private static EchoServer instance;
-
-    @Override
-    public void run() {
-        instance = new EchoServer();
-        startServer();
-    }
-
-    public EchoServer() {
-    }
-
-    public static EchoServer getInstance() {
-        if (instance == null) {
-            instance = new EchoServer();
-        }
-        return instance;
-    }
-
-    public void startServer() {
+    {
         auth = new NioEventLoopGroup(1);
         worker = new NioEventLoopGroup();
         users = new ConcurrentLinkedDeque<>();
+    }
 
+    @Override
+    public void run() {
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(auth, worker)
@@ -54,20 +40,18 @@ public class EchoServer implements Runnable {
                             );
                         }
                     });
-            ChannelFuture future = bootstrap.bind(8189).sync();
+            channelFuture = bootstrap.bind(8189).sync();
             System.out.println("Server started...");
-            future.channel().closeFuture().sync(); // block
+            Utils.addPrefix();
+            channelFuture.channel().closeFuture().sync(); // block
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             auth.shutdownGracefully();
             worker.shutdownGracefully();
+            System.out.println("Server stopped...");
+            Utils.addPrefix();
+            channelFuture.channel().disconnect();
         }
-    }
-
-    public void stopServer() {
-        auth.shutdownGracefully();
-        worker.shutdownGracefully();
-        System.out.println("Server stopped...");
     }
 }
