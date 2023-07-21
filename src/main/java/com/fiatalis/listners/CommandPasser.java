@@ -1,15 +1,19 @@
 package com.fiatalis.listners;
 
-import com.fiatalis.EchoServer;
+import com.fiatalis.command.*;
+import com.fiatalis.utils.Utils;
 
 public class CommandPasser {
     Thread thread = null;
 
     public void readerCommand(String s) throws IllegalArgumentException {
-        if (s.equals("")) {return;}
-        switch (Commands.valueOf(s.toUpperCase())) {
+        if (s.equals("")) {
+            return;
+        }
+        Command command = null;
+        switch (CommandsEnum.valueOf(s.toUpperCase())) {
             case LS:
-                System.out.println("Список файлов");
+                command = new LsCommand();
                 break;
             case CD:
                 System.out.println("переход в папку");
@@ -24,25 +28,21 @@ public class CommandPasser {
                 System.out.println("Прочитать файл");
                 break;
             case START:
-                if (thread == null) {
-                    thread = new Thread(new EchoServer(), "server");
-                }
-                if (thread.isAlive()) {
-                    System.out.println("Already working");
-                    break;
-                }
-                thread.start();
+                command = new StartCommand();
+                var startCommand = (CommandLocalExecutor) command;
+                startCommand.setThread(thread);
+                startCommand.run();
+                thread = startCommand.getThread();
                 break;
             case STOP:
-                try {
-                    thread.interrupt();
-                    thread = null;
-                } catch (NullPointerException e) {
-                    System.out.println("Please enter start");
-                }
+                command = new StopCommand();
+                var stopCommand = (CommandLocalExecutor) command;
+                stopCommand.setThread(thread);
+                stopCommand.run();
+                thread = stopCommand.getThread();
                 break;
-
         }
+        Utils.printConsole(command.getHelp());
     }
 
 }

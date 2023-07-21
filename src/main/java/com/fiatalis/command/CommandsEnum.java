@@ -1,6 +1,6 @@
-package com.fiatalis.listners;
+package com.fiatalis.command;
 
-public enum Commands {
+public enum CommandsEnum {
     LS,
     CD,
     MKDIR,
