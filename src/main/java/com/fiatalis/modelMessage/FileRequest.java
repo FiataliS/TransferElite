@@ -1,4 +1,4 @@
-package com.fiatalis.model;
+package com.fiatalis.modelMessage;
 
 import lombok.Data;
 
