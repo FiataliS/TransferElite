@@ -1,8 +1,9 @@
 package com.fiatalis.command;
 
-public class CdCommand extends CommandWorker implements CommandExternalPerformer {
-    public CdCommand() {
-        commandsEnum = CommandsEnum.CD;
+public class PwdCommand extends CommandWorker implements CommandExternalPerformer {
+
+    public PwdCommand() {
+        commandsEnum = CommandsEnum.PWD;
     }
 
     @Override

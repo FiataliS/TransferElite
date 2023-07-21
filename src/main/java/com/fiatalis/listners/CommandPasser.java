@@ -14,9 +14,11 @@ public class CommandPasser {
         switch (CommandsEnum.valueOf(s.toUpperCase())) {
             case LS:
                 command = new LsCommand();
+                var ls = (CommandExternalPerformer) command;
+
                 break;
             case CD:
-                System.out.println("переход в папку");
+                command = new CdCommand();
                 break;
             case RM:
                 System.out.println("Удалить файл, папку");
@@ -25,7 +27,7 @@ public class CommandPasser {
                 System.out.println("Создать папку");
                 break;
             case CAT:
-                System.out.println("Прочитать файл");
+                command = new CatCommand();
                 break;
             case START:
                 command = new StartCommand();

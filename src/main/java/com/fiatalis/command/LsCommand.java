@@ -1,9 +1,9 @@
 package com.fiatalis.command;
 
-public class LsCommand extends CommandWorker implements CommandExternalPerformer{
+public class LsCommand extends CommandWorker implements CommandExternalPerformer {
 
     public LsCommand() {
-      commandsEnum = CommandsEnum.LS;
+        commandsEnum = CommandsEnum.LS;
     }
 
     @Override
