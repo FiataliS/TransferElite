@@ -1,9 +1,7 @@
 package com.fiatalis;
 
 import com.fiatalis.listners.CommandPasser;
-import com.fiatalis.repositories.UserDao;
-import com.fiatalis.repositories.UserDaoImpl;
-import com.fiatalis.utils.SessionFactoryUtils;
+import com.fiatalis.utils.ConfigBuilding;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
@@ -13,15 +11,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        SessionFactoryUtils sessionFactoryUtils = new SessionFactoryUtils();
-        sessionFactoryUtils.init();
-//        try {
-//            UserDao userDao = new UserDaoImpl(sessionFactoryUtils);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        } finally {
-//            sessionFactoryUtils.shotdown();
-//        }
+
+        ConfigBuilding t = new ConfigBuilding();
+
 
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
