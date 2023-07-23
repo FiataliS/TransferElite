@@ -1,5 +1,8 @@
 package com.fiatalis.entity;
 
+import lombok.Getter;
+
+@Getter
 public class ConnectAddress extends MyAddress {
 
     public ConnectAddress(String name, int port) {

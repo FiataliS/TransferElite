@@ -16,12 +16,6 @@ public class ConfigBuilding {
 
     public ConfigBuilding() throws IOException {
         ini = new Wini(getFile());
-
-        Entity entity = getEntity(EntityEnum.CONNECT_ADDRESS);
-
-        for (int i = 0; i < entity.getOptionName().length; i++) {
-            System.out.println(entity.getObjectValue()[i]);
-        }
     }
 
     public void addNewOrUpdate(Entity entity) {

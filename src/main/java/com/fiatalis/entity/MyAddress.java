@@ -1,7 +1,9 @@
 package com.fiatalis.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class MyAddress implements Entity{
     String name;
