@@ -3,11 +3,12 @@ package com.fiatalis.command;
 import lombok.Data;
 
 @Data
-public class StopCommand extends CommandWorker implements CommandLocalExecutor {
+public class StopCommand  extends CommandsRun {
     Thread thread;
 
-    public StopCommand() {
-        commandsEnum = CommandsEnum.STOP;
+    public StopCommand(Thread thread, Attribute attribute) {
+        this.thread = thread;
+        super.attribute = attribute;
     }
 
     @Override
@@ -17,6 +18,15 @@ public class StopCommand extends CommandWorker implements CommandLocalExecutor {
             thread = null;
         } catch (NullPointerException e) {
             System.out.println("Please enter start");
+        }
+    }
+
+    @Override
+    public void handler() {
+        if (super.attribute.getAttribute() == null) {
+            run();
+        } else {
+
         }
     }
 }

@@ -1,11 +1,11 @@
 package com.fiatalis;
 
-import com.fiatalis.listners.CommandPasser;
-import com.fiatalis.utils.ConfigBuilding;
+import com.fiatalis.handler.CommandHandler;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -14,12 +14,13 @@ public class Main {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         List<String> list;
-        CommandPasser commandPasser = new CommandPasser();
+        CommandHandler commandHandler;
         while (true) {
             Utils.addPrefix();
             list = Utils.parsing(reader.readLine());
+            commandHandler = new CommandHandler(list);
             try {
-                commandPasser.readerCommand(list.get(0));
+                commandHandler.commandDefinition();
             } catch (IllegalArgumentException e) {
                 System.out.println("Команда не наедена");
             }

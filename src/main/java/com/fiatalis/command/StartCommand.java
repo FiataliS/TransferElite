@@ -4,13 +4,13 @@ import com.fiatalis.EchoServer;
 import lombok.Data;
 
 @Data
-public class StartCommand extends CommandWorker implements CommandLocalExecutor {
+public class StartCommand extends CommandsRun {
     Thread thread;
 
-    public StartCommand() {
-        commandsEnum = CommandsEnum.START;
+    public StartCommand(Thread thread, Attribute attribute) {
+        this.thread = thread;
+        super.attribute = attribute;
     }
-
 
     @Override
     public void run() {
@@ -24,4 +24,12 @@ public class StartCommand extends CommandWorker implements CommandLocalExecutor 
         thread.start();
     }
 
+    @Override
+    public void handler() {
+        if (super.attribute.getAttribute() == null) {
+            run();
+        } else {
+
+        }
+    }
 }
