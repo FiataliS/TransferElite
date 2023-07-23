@@ -12,10 +12,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        ConfigBuilding t = new ConfigBuilding();
-
-
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         List<String> list;
         CommandPasser commandPasser = new CommandPasser();

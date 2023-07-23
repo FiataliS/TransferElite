@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class ConfigBuilding {
     private Wini ini;
-    private final String INI_FILE = "saves/TransferEliteConfig.ini";
+    private final String INI_FILE = System.getProperty("user.home") + "TransferElite/TransferEliteConfig.ini";
 
     public ConfigBuilding() throws IOException {
         ini = new Wini(getFile());
