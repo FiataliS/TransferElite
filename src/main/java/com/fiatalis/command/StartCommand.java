@@ -1,27 +1,33 @@
 package com.fiatalis.command;
 
 import com.fiatalis.EchoServer;
-import lombok.Data;
+import com.fiatalis.handler.CommandHandler;
+import com.fiatalis.utils.Utils;
 
-@Data
+
 public class StartCommand extends CommandsRun {
-    Thread thread;
 
-    public StartCommand(Thread thread, Attribute attribute) {
-        this.thread = thread;
-        super.attribute = attribute;
+    public StartCommand(Attribute attribute) {
+        super(attribute);
+    }
+
+    @Override
+    void help() {
+        Utils.printConsole("Команда Start запускает сервер");
     }
 
     @Override
     public void run() {
-        if (thread == null) {
-            thread = new Thread(new EchoServer(), "server");
+        if (CommandHandler.thread == null) {
+            CommandHandler.thread = new Thread(new EchoServer(), "server");
+        } else {
+
         }
-        if (thread.isAlive()) {
+        if (CommandHandler.thread.isAlive()) {
             System.out.println("Already working");
             return;
         }
-        thread.start();
+        CommandHandler.thread.start();
     }
 
     @Override
@@ -29,7 +35,14 @@ public class StartCommand extends CommandsRun {
         if (super.attribute.getAttribute() == null) {
             run();
         } else {
+            attributeHandler();
+        }
+    }
 
+    @Override
+    public void attributeHandler() {
+        if (super.attribute.getAttribute().equals("help")) {
+            help();
         }
     }
 }

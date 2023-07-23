@@ -24,5 +24,11 @@ public class User implements Entity {
         return new String[]{name,password};
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

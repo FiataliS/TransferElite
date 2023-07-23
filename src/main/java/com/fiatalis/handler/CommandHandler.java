@@ -2,13 +2,12 @@ package com.fiatalis.handler;
 
 import com.fiatalis.command.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommandHandler {
-    Thread thread = null;
-    Commands command = null;
-    List<String> query;
+    public static Thread thread = null;
+    private Commands command = null;
+    private List<String> query;
 
     public CommandHandler(List<String> query) {
         this.query = query;
@@ -21,20 +20,15 @@ public class CommandHandler {
                 command = new LsCommands(attribute);
                 break;
             case START:
-                command = new StartCommand(thread, attribute);
-                //var startCommand = (StartCommand) command;
-//                startCommand.setThread(thread);
-//                startCommand.run();
-//                thread = startCommand.getThread();
+                command = new StartCommand(attribute);
                 break;
             case STOP:
-                command = new StopCommand(thread, attribute);
-//                var stopCommand = (StopCommand) command;
-//                stopCommand.setThread(thread);
-//                stopCommand.run();
-//                thread = stopCommand.getThread();
+                command = new StopCommand(attribute);
                 break;
+            case OPTIONS:
+                command = new OptionsCommand(attribute);
         }
+
         if (command != null) {
             command.handler();
         }

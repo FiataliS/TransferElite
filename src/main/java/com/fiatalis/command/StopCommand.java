@@ -1,21 +1,25 @@
 package com.fiatalis.command;
 
-import lombok.Data;
+import com.fiatalis.handler.CommandHandler;
+import com.fiatalis.utils.Utils;
 
-@Data
-public class StopCommand  extends CommandsRun {
-    Thread thread;
 
-    public StopCommand(Thread thread, Attribute attribute) {
-        this.thread = thread;
-        super.attribute = attribute;
+public class StopCommand extends CommandsRun {
+
+    public StopCommand(Attribute attribute) {
+        super(attribute);
+    }
+
+    @Override
+    void help() {
+        Utils.printConsole("Команда Stop выкдючает сервер");
     }
 
     @Override
     public void run() {
         try {
-            thread.interrupt();
-            thread = null;
+            CommandHandler.thread.interrupt();
+            CommandHandler.thread = null;
         } catch (NullPointerException e) {
             System.out.println("Please enter start");
         }
@@ -26,7 +30,14 @@ public class StopCommand  extends CommandsRun {
         if (super.attribute.getAttribute() == null) {
             run();
         } else {
+            attributeHandler();
+        }
+    }
 
+    @Override
+    public void attributeHandler() {
+        if (super.attribute.getAttribute().equals("help")) {
+            help();
         }
     }
 }

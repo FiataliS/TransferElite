@@ -1,13 +1,20 @@
 package com.fiatalis.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class MyAddress implements Entity{
+public class MyAddress implements Entity {
     String name;
     int port;
+
+    public MyAddress(String name, String port) {
+        this.name = name;
+        if (port == null) {
+            this.port = 0;
+            return;
+        }
+        this.port = Integer.valueOf(port);
+    }
 
     @Override
     public EntityEnum getKey() {
@@ -16,11 +23,20 @@ public class MyAddress implements Entity{
 
     @Override
     public String[] getOptionName() {
-        return new String[]{"name","port"};
+        return new String[]{"name", "port"};
     }
 
     @Override
     public String[] getObjectValue() {
         return new String[]{name, String.valueOf(port)};
     }
+
+    @Override
+    public String toString() {
+        return "MyAddress{" +
+                "name='" + name + '\'' +
+                ", port=" + port +
+                '}';
+    }
+
 }
