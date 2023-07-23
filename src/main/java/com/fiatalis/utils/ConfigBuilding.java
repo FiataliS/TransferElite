@@ -1,9 +1,6 @@
 package com.fiatalis.utils;
 
-import com.fiatalis.entity.Address;
-import com.fiatalis.entity.Entity;
-import com.fiatalis.entity.EntityEnum;
-import com.fiatalis.entity.User;
+import com.fiatalis.entity.*;
 import org.ini4j.Profile.*;
 import org.ini4j.Wini;
 
@@ -19,33 +16,47 @@ public class ConfigBuilding {
 
     public ConfigBuilding() throws IOException {
         ini = new Wini(getFile());
-        addNew(new User("Антон", "3asdasd2"));
-        addNew(new User("Енот", "3vbngffg2"));
-        System.out.println(ini);
+
+        Entity entity = getEntity(EntityEnum.CONNECT_ADDRESS);
+
+        for (int i = 0; i < entity.getOptionName().length; i++) {
+            System.out.println(entity.getObjectValue()[i]);
+        }
     }
 
-    public void addNew(Entity entity) {
+    public void addNewOrUpdate(Entity entity) {
         String sectionName = getSectionName(entity);
         for (int i = 0; i < entity.getOptionName().length; i++) {
             ini.put(sectionName, entity.getOptionName()[i], entity.getObjectValue()[i]);
         }
-//        if (entity instanceof User) {
-//            ini.put(entity.getKey().name(), "user", entity.getOptionName());
-//            ini.put(getSectionName(EntityEnum.USER), "pass", ((User) entity).getPassword());
-//        } else if (entity instanceof Address) {
-//            ini.put(getSectionName(EntityEnum.ADDRESS), "address", ((Address) entity).getName());
-//            ini.put(getSectionName(EntityEnum.ADDRESS), "port", ((Address) entity).getPort());
-//        }
         updateIniFile();
     }
 
-
-    public void deleteSection() {
-
+    public Entity getEntity(EntityEnum name) {
+        String[] objectValue = new String[2];
+        Set<Map.Entry<String, Section>> sections = ini.entrySet();
+        for (Map.Entry<String, Section> s : sections) {
+            if (s.getKey().equals(name.toString())) {
+                objectValue = s.getValue().values().toArray(String[]::new);
+            }
+        }
+        Entity entity = null;
+        switch (name) {
+            case USER:
+                entity = new User(objectValue[0], objectValue[1]);
+                break;
+            case MY_ADDRESS:
+                entity = new MyAddress(objectValue[0], Integer.valueOf(objectValue[1]));
+                break;
+            case CONNECT_ADDRESS:
+                entity = new ConnectAddress(objectValue[0], Integer.valueOf(objectValue[1]));
+                break;
+        }
+        return entity;
     }
 
 
-    void updateIniFile() {
+    private void updateIniFile() {
         try {
             ini.store(new FileOutputStream(INI_FILE));
         } catch (IOException e) {
@@ -73,12 +84,6 @@ public class ConfigBuilding {
                 return s.getKey();
             }
         }
-        return entity.getKey().name() + sections.size();
+        return entity.getKey().toString();
     }
-
-    private boolean checkEntity(String name) {
-        Set<Map.Entry<String, Section>> sections = ini.entrySet();
-        return sections.stream().anyMatch(s -> s.getValue().getName().equals(name));
-    }
-
 }

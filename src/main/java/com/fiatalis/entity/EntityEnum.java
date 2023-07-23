@@ -2,5 +2,6 @@ package com.fiatalis.entity;
 
 public enum EntityEnum {
     USER,
-    ADDRESS
+    MY_ADDRESS,
+    CONNECT_ADDRESS
 }

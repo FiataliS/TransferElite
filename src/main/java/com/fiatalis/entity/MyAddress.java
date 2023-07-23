@@ -1,17 +1,15 @@
 package com.fiatalis.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-public class Address implements Entity{
+public class MyAddress implements Entity{
     String name;
     int port;
 
     @Override
     public EntityEnum getKey() {
-        return EntityEnum.ADDRESS;
+        return EntityEnum.MY_ADDRESS;
     }
 
     @Override
