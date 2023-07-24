@@ -27,6 +27,12 @@ public class CommandHandler {
             case SET_USER:
                 command = new SetUserCommand(attribute);
                 break;
+            case SET_SERVER:
+                command = new SetServerCommand(attribute);
+                break;
+            case SET_CONNECT:
+                command = new SetConnect(attribute);
+                break;
             default:
                 System.out.println("Команда не наедена");
         }

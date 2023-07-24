@@ -8,6 +8,7 @@ public abstract class CommandsRun implements Commands {
     }
 
     abstract void help();
+
     abstract void run();
 
     public void handler() {
@@ -17,5 +18,6 @@ public abstract class CommandsRun implements Commands {
             attributeHandler();
         }
     }
+
     abstract void attributeHandler();
 }

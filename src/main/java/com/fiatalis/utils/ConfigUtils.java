@@ -16,7 +16,7 @@ public class ConfigUtils {
     private Wini ini;
     private final String INI_FILE = "save/TransferEliteConfig.ini";
 
-    public ConfigUtils()  {
+    public ConfigUtils() {
         try {
             ini = new Wini(getFile());
         } catch (IOException e) {
@@ -45,8 +45,8 @@ public class ConfigUtils {
             case USER:
                 entity = new User(objectValue[0], objectValue[1]);
                 break;
-            case MY_ADDRESS:
-                entity = new MyAddress(objectValue[0], objectValue[1]);
+            case SERVER_ADDRESS:
+                entity = new ServerAddress(objectValue[0], objectValue[1]);
                 break;
             case CONNECT_ADDRESS:
                 entity = new ConnectAddress(objectValue[0], objectValue[1]);

@@ -1,8 +1,7 @@
 package com.fiatalis.command;
 
 import com.fiatalis.entity.ConnectAddress;
-import com.fiatalis.entity.EntityEnum;
-import com.fiatalis.entity.MyAddress;
+import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.entity.User;
 import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;
@@ -21,10 +20,10 @@ public class OptionsCommand extends CommandsRun {
 
     @Override
     void run() {
-        User user = (User) configUtils.getEntity(EntityEnum.USER);
-        MyAddress myAddress = (MyAddress) configUtils.getEntity(EntityEnum.MY_ADDRESS);
-        ConnectAddress connectAddress = (ConnectAddress) configUtils.getEntity(EntityEnum.CONNECT_ADDRESS);
-        Utils.printConsole(user + "\n" + connectAddress + "\n" + myAddress);
+        User user = new User();
+        ServerAddress serverAddress = new ServerAddress();
+        ConnectAddress connectAddress = new ConnectAddress();
+        Utils.printConsole(user.getEntity() + "\n" + connectAddress.getEntity() + "\n" + serverAddress.getEntity());
     }
 
     @Override

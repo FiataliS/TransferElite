@@ -31,7 +31,7 @@ public class Attribute {
 
 
     private void searchCommand() {
-        if (checkAttribute(0).toUpperCase().equals("SET")) {
+        if (checkAttribute(0).toUpperCase().equals("SET") && list.size() >= 2) {
             switch (checkAttribute(1).toUpperCase()) {
                 case "USER":
                     commandsEnum = CommandsEnum.SET_USER;
