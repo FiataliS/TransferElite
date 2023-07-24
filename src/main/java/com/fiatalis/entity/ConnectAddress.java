@@ -16,9 +16,8 @@ public class ConnectAddress extends MyAddress {
 
     @Override
     public String toString() {
-        return "ConnectAddress{" +
-                "name='" + name + '\'' +
-                ", port=" + port +
-                '}';
+        return "ConnectAddress" + "\n" +
+                "name: " + name + "\n" +
+                "port: " + port;
     }
 }

@@ -33,10 +33,9 @@ public class MyAddress implements Entity {
 
     @Override
     public String toString() {
-        return "MyAddress{" +
-                "name='" + name + '\'' +
-                ", port=" + port +
-                '}';
+        return "MyAddress" + "\n" +
+                "name: " + name + "\n" +
+                "port: " + port;
     }
 
 }

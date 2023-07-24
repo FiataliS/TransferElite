@@ -1,8 +1,7 @@
 package com.fiatalis.command;
 
-import com.fiatalis.entity.User;
-
 public enum CommandsEnum {
+    NOT_FOUND,
     LS,
     CD,
     MKDIR,
@@ -12,7 +11,7 @@ public enum CommandsEnum {
     START,
     STOP,
     OPTIONS,
-    SET_User,
+    SET_USER,
     SET_SERVER,
     SET_CONNECT
 }

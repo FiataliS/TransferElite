@@ -2,20 +2,16 @@ package com.fiatalis.handler;
 
 import com.fiatalis.command.*;
 
-import java.util.List;
-
 public class CommandHandler {
-    public static Thread thread = null;
     private Commands command = null;
-    private List<String> query;
+    Attribute attribute;
 
-    public CommandHandler(List<String> query) {
-        this.query = query;
+    public CommandHandler(String string) {
+        attribute = new Attribute(string);
     }
 
     public void commandDefinition() {
-        Attribute attribute = new Attribute(query);
-        switch (attribute.getCommand()) {
+        switch (attribute.getCommandsEnum()) {
             case LS:
                 command = new LsCommands(attribute);
                 break;
@@ -27,8 +23,13 @@ public class CommandHandler {
                 break;
             case OPTIONS:
                 command = new OptionsCommand(attribute);
+                break;
+            case SET_USER:
+                command = new SetUserCommand(attribute);
+                break;
+            default:
+                System.out.println("Команда не наедена");
         }
-
         if (command != null) {
             command.handler();
         }

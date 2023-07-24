@@ -9,15 +9,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @Data
-public class ConfigBuilding {
+public class ConfigUtils {
     private Wini ini;
     private final String INI_FILE = "save/TransferEliteConfig.ini";
 
-    public ConfigBuilding()  {
+    public ConfigUtils()  {
         try {
             ini = new Wini(getFile());
         } catch (IOException e) {

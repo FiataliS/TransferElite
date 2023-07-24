@@ -1,6 +1,7 @@
 package com.fiatalis.command;
 
-import com.fiatalis.handler.CommandHandler;
+
+import com.fiatalis.utils.ThreadServerUtils;
 import com.fiatalis.utils.Utils;
 
 
@@ -18,8 +19,8 @@ public class StopCommand extends CommandsRun {
     @Override
     public void run() {
         try {
-            CommandHandler.thread.interrupt();
-            CommandHandler.thread = null;
+            ThreadServerUtils.getInstance().getThread().interrupt();
+            ThreadServerUtils.getInstance().setThread(null);
         } catch (NullPointerException e) {
             System.out.println("Please enter start");
         }

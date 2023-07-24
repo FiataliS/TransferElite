@@ -1,9 +1,9 @@
 package com.fiatalis.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
-@Getter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class User implements Entity {
     String name;
@@ -26,9 +26,8 @@ public class User implements Entity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "User" + "\n" +
+                "name: " + name + "\n" +
+                "password: " + password;
     }
 }

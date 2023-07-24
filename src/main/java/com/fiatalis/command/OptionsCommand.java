@@ -4,11 +4,11 @@ import com.fiatalis.entity.ConnectAddress;
 import com.fiatalis.entity.EntityEnum;
 import com.fiatalis.entity.MyAddress;
 import com.fiatalis.entity.User;
-import com.fiatalis.utils.ConfigBuilding;
+import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;
 
 public class OptionsCommand extends CommandsRun {
-    ConfigBuilding configBuilding;
+    ConfigUtils configUtils = new ConfigUtils();
 
     public OptionsCommand(Attribute attribute) {
         super(attribute);
@@ -16,15 +16,14 @@ public class OptionsCommand extends CommandsRun {
 
     @Override
     void help() {
-        Utils.printConsole("Это команда показывает свойства файла настроек: " + configBuilding.getINI_FILE());
+        Utils.printConsole("Это команда показывает свойства файла настроек: " + configUtils.getINI_FILE());
     }
 
     @Override
     void run() {
-        configBuilding = new ConfigBuilding();
-        User user = (User) configBuilding.getEntity(EntityEnum.USER);
-        MyAddress myAddress = (MyAddress) configBuilding.getEntity(EntityEnum.MY_ADDRESS);
-        ConnectAddress connectAddress = (ConnectAddress) configBuilding.getEntity(EntityEnum.CONNECT_ADDRESS);
+        User user = (User) configUtils.getEntity(EntityEnum.USER);
+        MyAddress myAddress = (MyAddress) configUtils.getEntity(EntityEnum.MY_ADDRESS);
+        ConnectAddress connectAddress = (ConnectAddress) configUtils.getEntity(EntityEnum.CONNECT_ADDRESS);
         Utils.printConsole(user + "\n" + connectAddress + "\n" + myAddress);
     }
 
