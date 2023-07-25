@@ -1,6 +1,6 @@
 package com.fiatalis.command;
 
-public interface CommandExternalPerformer {
+public interface CommandsRequest extends Commands {
     void receiveCommand();
     void transferCommand();
 }

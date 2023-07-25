@@ -1,27 +1,47 @@
 package com.fiatalis.command;
 
 import com.fiatalis.EchoServer;
-import lombok.Data;
+import com.fiatalis.utils.ThreadServerUtils;
+import com.fiatalis.utils.Utils;
 
-@Data
-public class StartCommand extends CommandWorker implements CommandLocalExecutor {
-    Thread thread;
 
-    public StartCommand() {
-        commandsEnum = CommandsEnum.START;
+public class StartCommand extends CommandsRun {
+
+    public StartCommand(Attribute attribute) {
+        super(attribute);
     }
 
+    @Override
+    void help() {
+        Utils.printConsole("Команда Start запускает сервер");
+    }
 
     @Override
     public void run() {
-        if (thread == null) {
-            thread = new Thread(new EchoServer(), "server");
+        ThreadServerUtils.getInstance();
+        if (ThreadServerUtils.getInstance().getThread() == null) {
+            ThreadServerUtils.getInstance().setThread(new Thread(new EchoServer(), "server"));
         }
-        if (thread.isAlive()) {
+        if (ThreadServerUtils.getInstance().getThread().isAlive()) {
             System.out.println("Already working");
             return;
         }
-        thread.start();
+        ThreadServerUtils.getInstance().getThread().start();
     }
 
+    @Override
+    public void handler() {
+        if (super.attribute.getAttribute() == null) {
+            run();
+        } else {
+            attributeHandler();
+        }
+    }
+
+    @Override
+    public void attributeHandler() {
+        if (super.attribute.getAttribute().equals("help")) {
+            help();
+        }
+    }
 }

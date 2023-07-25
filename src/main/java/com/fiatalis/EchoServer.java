@@ -1,5 +1,6 @@
 package com.fiatalis;
 
+import com.fiatalis.handler.CloudMessageHandler;
 import com.fiatalis.utils.Utils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -35,8 +36,8 @@ public class EchoServer extends Thread  {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(
                                     new ObjectEncoder(),
-                                    new ObjectDecoder(ClassResolvers.cacheDisabled(null))
-                                    // new CloudMessageHandler()
+                                    new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
+                                    new CloudMessageHandler()
                             );
                         }
                     });
