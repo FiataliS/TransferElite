@@ -10,14 +10,14 @@ import java.util.stream.Stream;
 public class Attribute {
     private CommandsEnum commandsEnum = CommandsEnum.NOT_FOUND;
     private String attribute;
-    private String property;
+    private String options;
     private List<String> list;
 
     public Attribute(String string) {
         list = parsing(string);
         searchCommand();
         attribute = checkAttribute(1);
-        property = checkAttribute(2);
+        options = checkAttribute(2);
     }
 
     private String checkAttribute(int check) {
