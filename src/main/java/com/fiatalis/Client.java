@@ -45,8 +45,7 @@ public class Client {
 
     public void connect(ConnectAddress connectAddress) {
         try {
-            System.out.println(connectAddress.getName() + " " + connectAddress.getPort());
-            Socket socket = new Socket(connectAddress.getEntity().getObjectValue()[0], Integer.parseInt(connectAddress.getEntity().getObjectValue()[1]));
+            Socket socket = new Socket(connectAddress.getObjectValue()[0], Integer.parseInt(connectAddress.getObjectValue()[1]));
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());

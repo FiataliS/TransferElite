@@ -1,7 +1,7 @@
 package com.fiatalis.handler;
 
-import com.fiatalis.entity.User;
 import com.fiatalis.modelMessage.*;
+import com.fiatalis.utils.AuthServiceUtils;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.io.File;
@@ -73,15 +73,14 @@ public class HandlerOperation {
         HANDLER_MAP.put(AUTH_SERV, (ctx, cloudMessage) -> {
             try {
                 AuthServ authServ = (AuthServ) cloudMessage;
-                String name = new User().getEntity().getObjectValue()[0];
-                if (name.equals(authServ.getName())) {
+                if (AuthServiceUtils.checkUser(authServ.getName(), authServ.getPass())) {
                     //CloudMessageHandler.setServerDir(CloudMessageHandler.getServerDir().resolve(id).toFile().toPath());
                     System.out.println("Подключился пользователь: " + authServ.getName());
-                    ctx.writeAndFlush(new AuthServ(authServ.getName(), authServ.getPass(), true));
+                    ctx.writeAndFlush(new AuthServ(authServ.getName(), "___", true));
                 } else {
-                    System.out.println("Попытка пользователя: " + authServ.getName());
-                    System.out.println("Пользователь: " + authServ.getName() + "отсутствет");
-                    ctx.writeAndFlush(new AuthServ(authServ.getName(), authServ.getPass(), false));
+                    System.out.println("Какой то: " + authServ.getName() + " пытался подключится");
+                    System.out.println("Пользователь: " + authServ.getName() + " отсутствет");
+                    ctx.writeAndFlush(new AuthServ(authServ.getName(), "___", false));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
