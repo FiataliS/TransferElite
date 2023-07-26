@@ -1,33 +1,29 @@
 package com.fiatalis.command;
 
-public class LsCommand implements CommandsRequest {
-    Attribute attribute;
+import com.fiatalis.utils.Utils;
+
+
+public class LsCommand extends CommandsRun {
+
 
     public LsCommand(Attribute attribute) {
-        this.attribute = attribute;
+        super(attribute);
     }
-
 
     @Override
     public void help() {
+        Utils.printConsole("Показывает список файлов на сервере");
+    }
+
+    @Override
+    public void run() {
 
     }
 
     @Override
-    public void receiveCommand() {
-
+    public void attributeHandler() {
+        if (super.attribute.getAttribute().equals("help")) {
+            help();
+        }
     }
-
-    @Override
-    public void transferCommand() {
-
-    }
-
-
-    @Override
-    public void handler() {
-
-    }
-
-
 }

@@ -38,6 +38,9 @@ public class CommandHandler {
                 break;
             case SPACE:
                 break;
+            case CONNECT:
+                command = new ConnectCommand(attribute);
+                break;
             default:
                 System.out.println("Команда не наедена");
         }

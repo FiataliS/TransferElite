@@ -1,7 +1,6 @@
 package com.fiatalis.command;
 
 import com.fiatalis.entity.DirectoryEntity;
-import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;

@@ -20,7 +20,7 @@ import java.util.List;
 public class Client {
     public List<String> clientView;
     public List<String> serverView;
-    private Path clientDir = Paths.get(new DirectoryEntity().getName());
+    private Path clientDir = Paths.get("client");
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
     private ServerAddress serverAddress = new ServerAddress();
@@ -41,9 +41,10 @@ public class Client {
         return localInstance;
     }
 
-    public void connect() {
+    public void connect(String address, int port) {
+
         try {
-            Socket socket = new Socket(serverAddress.getName(), serverAddress.getPort());
+            Socket socket = new Socket(address, port);
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());
@@ -72,7 +73,6 @@ public class Client {
                         serverView = lm.getFiles();
                         break;
                     case AUTH_SERV:
-
                         AuthServ authServ = (AuthServ) msg;
                         isAuthorized = authServ.getAuth();
                         if (!authServ.getAuth()) {

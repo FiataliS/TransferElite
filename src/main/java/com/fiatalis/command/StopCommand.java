@@ -12,7 +12,7 @@ public class StopCommand extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Команда Stop выкдючает сервер");
     }
 

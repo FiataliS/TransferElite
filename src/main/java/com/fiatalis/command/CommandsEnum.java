@@ -13,6 +13,7 @@ public enum CommandsEnum {
     START,
     STOP,
     OPTIONS,
+    CONNECT,
     SET_USER,
     SET_SERVER,
     SET_CONNECT

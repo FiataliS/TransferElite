@@ -15,7 +15,7 @@ public class SetConnect extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Это команда создаст/изменит порт и адрес сервера для соединения.");
     }
 
