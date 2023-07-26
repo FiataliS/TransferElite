@@ -1,5 +1,6 @@
 package com.fiatalis.command;
 
+import com.fiatalis.entity.DirectoryEntity;
 import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.utils.Utils;
 
@@ -7,30 +8,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SetServerCommand extends CommandsRun {
-    public SetServerCommand(Attribute attribute) {
+public class SetDirCommand extends CommandsRun{
+    public SetDirCommand(Attribute attribute) {
         super(attribute);
     }
 
     @Override
     public void help() {
-        Utils.printConsole("Это команда создаст/изменит порт и адрес для соединения с вами.");
+        Utils.printConsole("Это команда создаст/изменит директорию по умолчанию.");
     }
 
     @Override
-    void run() {
+    public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String name = null, port = null;
+        String name = null;
         try {
-            System.out.print("Введите адресс сервера, по умолчанию будет localhost: ");
+            System.out.print("Введите директорию, для сохранения по умолчанию: ");
             name = reader.readLine();
             if (name.length() < 1) name = null;
-            System.out.print("Введите порт, по умолчанию будет 8797: ");
-            port = reader.readLine().trim();
-            if (port.length() < 1) port = null;
         } catch (IOException e) {
         }
-        new ServerAddress(name, port).saveEntity();
+        new DirectoryEntity(name).saveEntity();
     }
 
     @Override

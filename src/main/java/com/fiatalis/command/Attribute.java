@@ -49,12 +49,10 @@ public class Attribute {
         try {
             commandsEnum = CommandsEnum.valueOf(checkAttribute(0).toUpperCase());
         } catch (IllegalArgumentException e) {
-
         }
     }
 
     private List<String> parsing(String string) {
         return Stream.of(string.split(" ")).collect(Collectors.toList());
     }
-
 }

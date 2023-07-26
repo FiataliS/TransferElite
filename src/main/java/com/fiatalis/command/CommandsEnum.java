@@ -2,6 +2,8 @@ package com.fiatalis.command;
 
 public enum CommandsEnum {
     NOT_FOUND,
+    EXIT,
+    SPACE,
     LS,
     CD,
     MKDIR,

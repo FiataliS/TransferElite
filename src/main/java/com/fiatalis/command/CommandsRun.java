@@ -7,10 +7,9 @@ public abstract class CommandsRun implements Commands {
         this.attribute = attribute;
     }
 
-    abstract void help();
-
     abstract void run();
 
+    @Override
     public void handler() {
         if (attribute.getAttribute() == null) {
             run();

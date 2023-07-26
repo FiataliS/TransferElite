@@ -14,12 +14,12 @@ public class SetUserCommand extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Это команда создаст нового пользователя");
     }
 
     @Override
-    void run() {
+    public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String name = null, password = null;
         try {

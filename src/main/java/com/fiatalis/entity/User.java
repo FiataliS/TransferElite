@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User implements Entity {
     String name;
+
+    public Integer getPassword() {
+        return password.hashCode();
+    }
+
     String password;
 
     @Override
