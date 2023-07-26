@@ -37,6 +37,7 @@ public class ServerAddress implements Entity {
         this.port = Integer.valueOf(port);
     }
 
+
     @Override
     public EntityEnum getKey() {
         return EntityEnum.SERVER_ADDRESS;

@@ -31,7 +31,7 @@ public class CommandHandler {
                 command = new SetServerCommand(attribute);
                 break;
             case SET_CONNECT:
-                command = new SetConnect(attribute);
+                command = new SetConnectCommand(attribute);
                 break;
             case EXIT:
                 command = new ExitCommand(attribute);

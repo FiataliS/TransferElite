@@ -5,7 +5,6 @@ import com.fiatalis.utils.Utils;
 
 public class LsCommand extends CommandsRun {
 
-
     public LsCommand(Attribute attribute) {
         super(attribute);
     }

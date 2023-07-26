@@ -1,9 +1,12 @@
 package com.fiatalis.command;
 
 import com.fiatalis.Client;
+import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
 public class ConnectCommand extends CommandsRun {
+
     public ConnectCommand(Attribute attribute) {
         super(attribute);
     }
@@ -16,7 +19,14 @@ public class ConnectCommand extends CommandsRun {
     @Override
     public void run() {
         Client client = Client.getInstance();
-        client.connect("172.16.1.22", 8189);
+        ConnectAddress connectAddress = (ConnectAddress) new ConnectAddress().getEntity();
+        User user = (User) new User().getEntity();
+        if (!client.isAuthorized()) {
+            client.connect(connectAddress);
+            client.authentication(user);
+            return;
+        }
+        System.out.println("Уже подключены к адрессу: " + connectAddress.getName() + ":" + connectAddress.getPort());
     }
 
     @Override

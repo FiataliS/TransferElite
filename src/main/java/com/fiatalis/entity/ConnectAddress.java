@@ -17,8 +17,6 @@ public class ConnectAddress extends ServerAddress {
         this.port = Integer.valueOf(port);
     }
 
-
-
     @Override
     public void saveEntity() {
         ConfigUtils configUtils = new ConfigUtils();

@@ -1,6 +1,8 @@
 package com.fiatalis;
 
+import com.fiatalis.entity.ConnectAddress;
 import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.User;
 import com.fiatalis.modelMessage.*;
 import com.fiatalis.utils.ThreadServerUtils;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
@@ -17,8 +19,8 @@ import java.util.List;
 
 @Data
 public class Client {
-    public List<String> clientView = new ArrayList<>();
-    public List<String> serverView = new ArrayList<>();
+    private List<String> clientView = new ArrayList<>();
+    private List<String> serverView = new ArrayList<>();
     private Path clientDir = Paths.get("clientDir");
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
@@ -26,6 +28,7 @@ public class Client {
     private boolean isAuthorized = false;
 
     private static volatile Client instance;
+
 
     public static Client getInstance() {
         Client localInstance = instance;
@@ -40,9 +43,10 @@ public class Client {
         return localInstance;
     }
 
-    public void connect(String address, int port) {
+    public void connect(ConnectAddress connectAddress) {
         try {
-            Socket socket = new Socket(address, port);
+            System.out.println(connectAddress.getName() + " " + connectAddress.getPort());
+            Socket socket = new Socket(connectAddress.getEntity().getObjectValue()[0], Integer.parseInt(connectAddress.getEntity().getObjectValue()[1]));
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());
@@ -72,8 +76,8 @@ public class Client {
                         break;
                     case AUTH_SERV:
                         AuthServ authServ = (AuthServ) msg;
-                        isAuthorized = authServ.getAuth();
-                        if (!authServ.getAuth()) {
+                        isAuthorized = authServ.isAuth();
+                        if (!authServ.isAuth()) {
                             System.out.println("Неверный логин и/или пороль");
                         }
                 }
@@ -89,7 +93,25 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void authentication(User user) {
+        if (!isAuthorized) {
+            if (user.getEntity().getObjectValue()[0].length() > 0) {
+                try {
+                    oos.writeObject(new AuthServ(user.getEntity().getObjectValue()[0], user.getEntity().getObjectValue()[1], isAuthorized));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Пустые строки" + "Заполни логин и/или пороль");
+                System.out.println("Введите команду set user");
+            }
+        } else {
+            isAuthorized = false;
+            //ConnectAddress connectAddress = new ConnectAddress();
+            //connect(connectAddress.getName(), connectAddress.getPort());
+        }
     }
 
 }

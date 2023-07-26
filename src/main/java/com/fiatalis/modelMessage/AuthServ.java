@@ -1,29 +1,23 @@
 package com.fiatalis.modelMessage;
 
+import com.fiatalis.entity.Entity;
+import com.fiatalis.entity.User;
+import lombok.Data;
+import lombok.Getter;
+
 import java.io.IOException;
 
+@Data
+@Getter
 public class AuthServ implements CloudMessage {
+    private String name;
+    private String pass;
+    private boolean auth;
 
-    String Nick;
-    String pass;
-    boolean auth;
-
-    public AuthServ(String nick, String pass, boolean auth) throws IOException {
-        this.Nick = nick;
+    public AuthServ(String name, String pass, boolean auth) throws IOException {
+        this.name = name;
         this.pass = pass;
         this.auth = auth;
-    }
-
-    public boolean getAuth() {
-        return auth;
-    }
-
-    public String getNick() {
-        return Nick;
-    }
-
-    public String getPass() {
-        return pass;
     }
 
     @Override
