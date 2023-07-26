@@ -1,5 +1,6 @@
 package com.fiatalis.command;
 
+import com.fiatalis.Client;
 import com.fiatalis.utils.Utils;
 
 
@@ -17,6 +18,8 @@ public class LsCommand extends CommandsRun {
 
     @Override
     public void run() {
+        Client.getInstance().updateServerViewPath();
+        Client.getInstance().serverView.forEach(System.out::println);
 
     }
 

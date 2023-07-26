@@ -1,9 +1,7 @@
 package com.fiatalis;
 
-import com.fiatalis.entity.DirectoryEntity;
 import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.modelMessage.*;
-import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.ThreadServerUtils;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
@@ -20,7 +18,7 @@ import java.util.List;
 public class Client {
     public List<String> clientView;
     public List<String> serverView;
-    private Path clientDir = Paths.get("client");
+    private Path clientDir = Paths.get("clientDir");
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
     private ServerAddress serverAddress = new ServerAddress();
@@ -42,7 +40,6 @@ public class Client {
     }
 
     public void connect(String address, int port) {
-
         try {
             Socket socket = new Socket(address, port);
             Thread readThread = new Thread(this::read);
@@ -71,6 +68,7 @@ public class Client {
                     case LIST:
                         ListMessage lm = (ListMessage) msg;
                         serverView = lm.getFiles();
+
                         break;
                     case AUTH_SERV:
                         AuthServ authServ = (AuthServ) msg;
@@ -83,6 +81,15 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateServerViewPath() {
+        try {
+            oos.writeObject(new ListMessage(clientDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
