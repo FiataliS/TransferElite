@@ -12,12 +12,13 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class Client {
-    public List<String> clientView;
-    public List<String> serverView;
+    public List<String> clientView = new ArrayList<>();
+    public List<String> serverView = new ArrayList<>();
     private Path clientDir = Paths.get("clientDir");
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
@@ -68,7 +69,6 @@ public class Client {
                     case LIST:
                         ListMessage lm = (ListMessage) msg;
                         serverView = lm.getFiles();
-
                         break;
                     case AUTH_SERV:
                         AuthServ authServ = (AuthServ) msg;

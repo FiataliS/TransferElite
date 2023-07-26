@@ -16,7 +16,7 @@ public class ConnectCommand extends CommandsRun {
     @Override
     public void run() {
         Client client = Client.getInstance();
-        client.connect("localhost", 8189);
+        client.connect("172.16.1.22", 8189);
     }
 
     @Override

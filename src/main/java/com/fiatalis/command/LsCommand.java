@@ -3,6 +3,8 @@ package com.fiatalis.command;
 import com.fiatalis.Client;
 import com.fiatalis.utils.Utils;
 
+import java.util.List;
+
 
 public class LsCommand extends CommandsRun {
 
@@ -19,7 +21,8 @@ public class LsCommand extends CommandsRun {
     @Override
     public void run() {
         Client.getInstance().updateServerViewPath();
-        Client.getInstance().serverView.forEach(System.out::println);
+        while (Client.getInstance().getServerView().size() == 0);
+        Client.getInstance().getServerView().forEach(System.out::println);
 
     }
 
