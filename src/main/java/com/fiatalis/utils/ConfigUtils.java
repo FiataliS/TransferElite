@@ -25,7 +25,7 @@ public class ConfigUtils {
     }
 
     public void addNewOrUpdate(Entity entity) {
-        String sectionName = getSectionName(entity);
+        String sectionName = entity.getKey().toString();
         for (int i = 0; i < entity.getOptionName().length; i++) {
             ini.put(sectionName, entity.getOptionName()[i], entity.getObjectValue()[i]);
         }

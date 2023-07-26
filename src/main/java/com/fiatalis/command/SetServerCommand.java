@@ -13,7 +13,7 @@ public class SetServerCommand extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Это команда создаст/изменит порт и адрес для соединения с вами.");
     }
 
@@ -26,7 +26,7 @@ public class SetServerCommand extends CommandsRun {
             name = reader.readLine();
             if (name.length() < 1) name = null;
             System.out.print("Введите порт, по умолчанию будет 8797: ");
-            port = reader.readLine().trim();
+            port = reader.readLine();
             if (port.length() < 1) port = null;
         } catch (IOException e) {
         }

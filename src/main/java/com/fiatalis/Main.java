@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Client.getInstance();
         CommandHandler commandHandler;
         while (true) {
             Utils.addPrefix();

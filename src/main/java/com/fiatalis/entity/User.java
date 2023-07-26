@@ -10,7 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User implements Entity {
     String name;
-    String password;
+    int password;
+
+    public int getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password.hashCode();
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password.hashCode();
+    }
 
     @Override
     public void saveEntity() {
@@ -36,7 +49,7 @@ public class User implements Entity {
 
     @Override
     public String[] getObjectValue() {
-        return new String[]{name,password};
+        return new String[]{name, String.valueOf(password)};
     }
 
     @Override

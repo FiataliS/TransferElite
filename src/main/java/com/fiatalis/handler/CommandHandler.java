@@ -13,7 +13,7 @@ public class CommandHandler {
     public void commandDefinition() {
         switch (attribute.getCommandsEnum()) {
             case LS:
-                command = new LsCommands(attribute);
+                command = new LsCommand(attribute);
                 break;
             case START:
                 command = new StartCommand(attribute);
@@ -31,7 +31,15 @@ public class CommandHandler {
                 command = new SetServerCommand(attribute);
                 break;
             case SET_CONNECT:
-                command = new SetConnect(attribute);
+                command = new SetConnectCommand(attribute);
+                break;
+            case EXIT:
+                command = new ExitCommand(attribute);
+                break;
+            case SPACE:
+                break;
+            case CONNECT:
+                command = new ConnectCommand(attribute);
                 break;
             default:
                 System.out.println("Команда не наедена");

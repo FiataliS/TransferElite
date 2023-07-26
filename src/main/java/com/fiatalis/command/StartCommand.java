@@ -12,7 +12,7 @@ public class StartCommand extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Команда Start запускает сервер");
     }
 

@@ -14,12 +14,12 @@ public class OptionsCommand extends CommandsRun {
     }
 
     @Override
-    void help() {
+    public void help() {
         Utils.printConsole("Это команда показывает свойства файла настроек: " + configUtils.getINI_FILE());
     }
 
     @Override
-    void run() {
+    public void run() {
         User user = new User();
         ServerAddress serverAddress = new ServerAddress();
         ConnectAddress connectAddress = new ConnectAddress();
