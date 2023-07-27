@@ -75,11 +75,8 @@ public class HandlerOperation {
                 AuthServ authServ = (AuthServ) cloudMessage;
                 if (AuthServiceUtils.checkUser(authServ.getName(), authServ.getPass())) {
                     //CloudMessageHandler.setServerDir(CloudMessageHandler.getServerDir().resolve(id).toFile().toPath());
-                    System.out.println("Подключился пользователь: " + authServ.getName());
                     ctx.writeAndFlush(new AuthServ(authServ.getName(), "___", true));
                 } else {
-                    System.out.println("Какой то: " + authServ.getName() + " пытался подключится");
-                    System.out.println("Пользователь: " + authServ.getName() + " отсутствет");
                     ctx.writeAndFlush(new AuthServ(authServ.getName(), "___", false));
                 }
             } catch (IOException e) {

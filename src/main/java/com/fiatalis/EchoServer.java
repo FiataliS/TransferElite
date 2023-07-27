@@ -19,7 +19,7 @@ public class EchoServer {
     private EventLoopGroup worker;
     private ConcurrentLinkedDeque<ChannelHandlerContext> users;
     private ChannelFuture channelFuture;
-    private Thread thread = null;
+    private Thread thread;
 
     private static volatile EchoServer instance;
 
@@ -42,7 +42,6 @@ public class EchoServer {
         users = new ConcurrentLinkedDeque<>();
         thread = new Thread(this::run);
         thread.setDaemon(true);
-
     }
 
     public void startServer() {
@@ -78,7 +77,7 @@ public class EchoServer {
                             );
                         }
                     });
-            channelFuture = bootstrap.bind(Integer.parseInt(new ServerAddress().getEntity().getObjectValue()[1])).sync();
+            channelFuture = bootstrap.bind(Integer.parseInt(ServerAddress.getInstance().getPort())).sync();
             System.out.println("Server started...");
             Utils.addPrefix();
             channelFuture.channel().closeFuture().sync(); // block

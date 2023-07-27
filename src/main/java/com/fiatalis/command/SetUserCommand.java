@@ -21,15 +21,13 @@ public class SetUserCommand extends CommandsRun {
     @Override
     public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String name = null, password = null;
         try {
             System.out.print("Введите имя пользователя: ");
-            name = reader.readLine();
+            User.getInstance().setName(reader.readLine().trim());
             System.out.print("Введите пороль: ");
-            password = reader.readLine();
+            User.getInstance().setPassword(reader.readLine().trim());
         } catch (IOException e) {
         }
-        new User(name, password).saveEntity();
     }
 
     @Override

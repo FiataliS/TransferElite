@@ -1,5 +1,9 @@
 package com.fiatalis;
 
+import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.Directory;
+import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.User;
 import com.fiatalis.handler.CommandHandler;
 import com.fiatalis.utils.Utils;
 
@@ -10,14 +14,22 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Client.getInstance();
-        EchoServer.getInstance();
+        init();
         CommandHandler commandHandler;
         while (true) {
             Utils.addPrefix();
             commandHandler = new CommandHandler(reader.readLine());
             commandHandler.commandDefinition();
         }
+    }
+
+    private static void init(){
+        Client.getInstance();
+        EchoServer.getInstance();
+        User.getInstance();
+        ServerAddress.getInstance();
+        Directory.getInstance();
+        ConnectAddress.getInstance();
     }
 
 }

@@ -1,39 +1,29 @@
 package com.fiatalis.entity;
 
-import com.fiatalis.utils.ConfigUtils;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class ConnectAddress extends ServerAddress {
 
-    public ConnectAddress(String name, String port) {
-        this.name = name;
-        if (port == null) {
-            this.port = 0;
-            return;
+    private static volatile ConnectAddress instance;
+
+    {
+        super.name = null;
+        super.port = null;
+    }
+
+    public static ConnectAddress getInstance() {
+        ConnectAddress localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ConnectAddress.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ConnectAddress();
+                }
+            }
         }
-        this.port = Integer.valueOf(port);
+        return localInstance;
     }
-
-    @Override
-    public void saveEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        configUtils.addNewOrUpdate(this);
-    }
-
-    @Override
-    public Entity getEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        return configUtils.getEntity(EntityEnum.CONNECT_ADDRESS);
-    }
-
-    @Override
-    public EntityEnum getKey() {
-        return EntityEnum.CONNECT_ADDRESS;
-    }
-
     @Override
     public String toString() {
         return "ConnectAddress" + "\n" +
