@@ -44,6 +44,6 @@ public class User {
     public String toString() {
         return "User" + "\n" +
                 "name: " + name + "\n" +
-                "password: " + password;
+                "password: " + passHash;
     }
 }
