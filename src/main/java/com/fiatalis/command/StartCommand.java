@@ -1,7 +1,6 @@
 package com.fiatalis.command;
 
 import com.fiatalis.EchoServer;
-import com.fiatalis.utils.ThreadServerUtils;
 import com.fiatalis.utils.Utils;
 
 
@@ -18,15 +17,7 @@ public class StartCommand extends CommandsRun {
 
     @Override
     public void run() {
-        ThreadServerUtils.getInstance();
-        if (ThreadServerUtils.getInstance().getThread() == null) {
-            ThreadServerUtils.getInstance().setThread(new Thread(new EchoServer(), "server"));
-        }
-        if (ThreadServerUtils.getInstance().getThread().isAlive()) {
-            System.out.println("Already working");
-            return;
-        }
-        ThreadServerUtils.getInstance().getThread().start();
+        EchoServer.getInstance().startServer();
     }
 
     @Override

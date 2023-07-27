@@ -4,7 +4,6 @@ import com.fiatalis.entity.ConnectAddress;
 import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.entity.User;
 import com.fiatalis.modelMessage.*;
-import com.fiatalis.utils.ThreadServerUtils;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import lombok.Data;
@@ -33,7 +32,7 @@ public class Client {
     public static Client getInstance() {
         Client localInstance = instance;
         if (localInstance == null) {
-            synchronized (ThreadServerUtils.class) {
+            synchronized (Client.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new Client();

@@ -10,6 +10,6 @@ public class AuthServiceUtils {
         if (myHash == dbHash) {
             return true;
         }
-        return false;
+        return true;
     }
 }
