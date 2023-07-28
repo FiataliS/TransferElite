@@ -25,6 +25,7 @@ public class Client {
     private ObjectDecoderInputStream ois;
     private ServerAddress serverAddress = new ServerAddress();
     private boolean isAuthorized = false;
+    Socket socket;
 
     private static volatile Client instance;
 
@@ -44,7 +45,7 @@ public class Client {
 
     public void connect(ConnectAddress connectAddress) {
         try {
-            Socket socket = new Socket(ConnectAddress.getInstance().getName(), Integer.parseInt(ConnectAddress.getInstance().getPort()));
+            socket = new Socket(ConnectAddress.getInstance().getName(), Integer.parseInt(ConnectAddress.getInstance().getPort()));
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());
@@ -58,6 +59,13 @@ public class Client {
             System.out.println("Сервер отсутствует");
         }
     }
+    public void disconnect(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            System.out.println("Соединение разорвано");
+        }
+    }
 
     private void read() {
         try {
@@ -67,6 +75,7 @@ public class Client {
                     case FILE:
                         FileMessage fm = (FileMessage) msg;
                         Files.write(clientDir.resolve(fm.getName()), fm.getBytes());
+                        System.out.println("Загружен файл: " + fm.getName());
                         break;
                     case LIST:
                         ListMessage lm = (ListMessage) msg;
@@ -81,7 +90,7 @@ public class Client {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Ошибка чтения ответа сервера.");
         }
     }
 
@@ -89,7 +98,7 @@ public class Client {
         try {
             oos.writeObject(new ListMessage(clientDir));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ошибка соединения");
         }
     }
 
@@ -107,8 +116,6 @@ public class Client {
             }
         } else {
             isAuthorized = false;
-            //ConnectAddress connectAddress = new ConnectAddress();
-            //connect(connectAddress.getName(), connectAddress.getPort());
         }
     }
 

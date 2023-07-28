@@ -17,5 +17,7 @@ public enum CommandsEnum {
     SET_USER,
     SET_SERVER,
     SAVE_OPT,
+    GET,
+    PUT,
     SET_CONNECT
 }

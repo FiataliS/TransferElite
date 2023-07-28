@@ -25,7 +25,7 @@ public class HandlerOperation {
                 Files.write(CloudMessageHandler.getServerDir().resolve(fm.getName()), fm.getBytes());
                 ctx.writeAndFlush(new ListMessage(CloudMessageHandler.getServerDir()));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка чтения файла.");
             }
         });
 
@@ -38,7 +38,7 @@ public class HandlerOperation {
                 }
                 ctx.writeAndFlush(new ListMessage(CloudMessageHandler.getServerDir()));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка запроса на получение файла");
             }
         });
 
@@ -46,7 +46,7 @@ public class HandlerOperation {
             try {
                 ctx.writeAndFlush(new ListMessage(CloudMessageHandler.getServerDir()));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка отправки списка директории");
             }
         });
 
@@ -66,7 +66,7 @@ public class HandlerOperation {
                 CloudMessageHandler.setServerDir(fileDir);
                 ctx.writeAndFlush(new ListMessage(CloudMessageHandler.getServerDir()));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка смены директории.");
             }
         });
 
@@ -80,7 +80,7 @@ public class HandlerOperation {
                     ctx.writeAndFlush(new AuthServ(authServ.getName(), "___", false));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка аутентификации");
             }
         });
 
@@ -92,7 +92,7 @@ public class HandlerOperation {
                 Files.createDirectory(path);
                 ctx.writeAndFlush(new ListMessage(CloudMessageHandler.getServerDir()));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server: ошибка создания папки.");
             }
         });
 

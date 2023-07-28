@@ -44,6 +44,9 @@ public class CommandHandler {
             case CONNECT:
                 command = new ConnectCommand(attribute);
                 break;
+            case GET:
+                command = new GetCommand(attribute);
+                break;
             default:
                 System.out.println("Команда не наедена");
         }
