@@ -1,7 +1,5 @@
 package com.fiatalis.modelMessage;
 
-import com.fiatalis.entity.Entity;
-import com.fiatalis.entity.User;
 import lombok.Data;
 import lombok.Getter;
 

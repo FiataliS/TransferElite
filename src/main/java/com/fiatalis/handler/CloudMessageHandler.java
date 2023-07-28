@@ -1,6 +1,7 @@
 package com.fiatalis.handler;
 
 
+import com.fiatalis.entity.Directory;
 import com.fiatalis.modelMessage.CloudMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -13,7 +14,7 @@ import static com.fiatalis.handler.HandlerOperation.HANDLER_MAP;
 
 public class CloudMessageHandler extends SimpleChannelInboundHandler<CloudMessage> {
 
-    private static Path serverDir;
+    private static Path serverDir = Path.of(Directory.getInstance().getName());
 
     public static Path getServerDir() {
         return serverDir;
@@ -25,7 +26,7 @@ public class CloudMessageHandler extends SimpleChannelInboundHandler<CloudMessag
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        serverDir = Paths.get("serverDir");
+        serverDir = Paths.get(Directory.getInstance().getName());
     }
 
     @Override

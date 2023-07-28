@@ -1,56 +1,44 @@
 package com.fiatalis.entity;
 
-import com.fiatalis.utils.ConfigUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ServerAddress implements Entity {
+public class ServerAddress {
     String name;
-    int port;
+    String port;
 
-    @Override
-    public void saveEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        configUtils.addNewOrUpdate(this);
+    private static volatile ServerAddress instance;
+
+    {
+        name = "localhost";
+        port = "8189";
     }
 
-    @Override
-    public Entity getEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        return configUtils.getEntity(EntityEnum.SERVER_ADDRESS);
-    }
-
-    public ServerAddress(String name, String port) {
-        if (name == null) {
-            this.name = "localhost";
-        } else {
-            this.name = name;
-        }
-        if (port == null) {
-            this.port = 0;
+    public void setName(String name) {
+        if (name.length() < 1) {
             return;
         }
-        this.port = Integer.valueOf(port);
+        this.name = name;
     }
 
-
-    @Override
-    public EntityEnum getKey() {
-        return EntityEnum.SERVER_ADDRESS;
+    public void setPort(String port) {
+        if (port.length() < 1) {
+            return;
+        }
+        this.port = port;
     }
 
-    @Override
-    public String[] getOptionName() {
-        return new String[]{"name", "port"};
-    }
-
-    @Override
-    public String[] getObjectValue() {
-        return new String[]{name, String.valueOf(port)};
+    public static ServerAddress getInstance() {
+        ServerAddress localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ServerAddress.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ServerAddress();
+                }
+            }
+        }
+        return localInstance;
     }
 
     @Override

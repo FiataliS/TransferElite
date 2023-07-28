@@ -12,9 +12,10 @@ public enum CommandsEnum {
     PWD,
     START,
     STOP,
-    OPTIONS,
+    OPT,
     CONNECT,
     SET_USER,
     SET_SERVER,
+    SAVE_OPT,
     SET_CONNECT
 }

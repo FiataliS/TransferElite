@@ -5,6 +5,10 @@ import com.fiatalis.entity.ConnectAddress;
 import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class ConnectCommand extends CommandsRun {
 
     public ConnectCommand(Attribute attribute) {
@@ -19,14 +23,26 @@ public class ConnectCommand extends CommandsRun {
     @Override
     public void run() {
         Client client = Client.getInstance();
-        ConnectAddress connectAddress = (ConnectAddress) new ConnectAddress().getEntity();
-        User user = (User) new User().getEntity();
-        if (!client.isAuthorized()) {
-            client.connect(connectAddress);
-            client.authentication(user);
+        ConnectAddress connectAddress = ConnectAddress.getInstance();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String name = null, password = null;
+        try {
+            System.out.print("Введите имя пользователя: ");
+            name = reader.readLine();
+            System.out.print("Введите пороль: ");
+            password = reader.readLine();
+        } catch (IOException e) {
+        }
+        if (connectAddress.getName().equals(null) || connectAddress.getPort().equals(null)) {
+            System.out.println("Нет адреса и порта для подключения!");
             return;
         }
-        System.out.println("Уже подключены к адрессу: " + connectAddress.getName() + ":" + connectAddress.getPort());
+        if (!client.isAuthorized()) {
+            client.connect(connectAddress);
+            client.authentication(name, password);
+            return;
+        }
+        System.out.println("Подключение прошло успешно: " + connectAddress.getName() + ":" + connectAddress.getPort());
     }
 
     @Override

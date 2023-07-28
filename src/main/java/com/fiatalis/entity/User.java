@@ -1,61 +1,51 @@
 package com.fiatalis.entity;
 
-import com.fiatalis.utils.ConfigUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+public class User {
+    private String name;
+    private String password;
+    private int passHash;
+    private static volatile User instance;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class User implements Entity {
-    String name;
-    int password;
+    public String getName() {
+        return name;
+    }
 
-    public int getPassword() {
-        return password;
+    public int getPassHash() {
+        return passHash;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+
     }
 
     public void setPassword(String password) {
-        this.password = password.hashCode();
+        this.password = password;
+        this.passHash = password.hashCode();
     }
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password.hashCode();
+    public void setPassHash(String passHash){
+        this.passHash = Integer.parseInt(passHash);
     }
 
-    @Override
-    public void saveEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        configUtils.addNewOrUpdate(this);
+    public static User getInstance() {
+        User localInstance = instance;
+        if (localInstance == null) {
+            synchronized (User.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new User();
+                }
+            }
+        }
+        return localInstance;
     }
 
-    @Override
-    public Entity getEntity() {
-        ConfigUtils configUtils = new ConfigUtils();
-        return configUtils.getEntity(EntityEnum.USER);
-    }
-
-    @Override
-    public EntityEnum getKey() {
-        return EntityEnum.USER;
-    }
-
-    @Override
-    public String[] getOptionName() {
-        return new String[]{"name","password"};
-    }
-
-    @Override
-    public String[] getObjectValue() {
-        return new String[]{name, String.valueOf(password)};
-    }
 
     @Override
     public String toString() {
         return "User" + "\n" +
                 "name: " + name + "\n" +
-                "password: " + password;
+                "password: " + passHash;
     }
 }

@@ -1,6 +1,6 @@
 package com.fiatalis.command;
 
-import com.fiatalis.entity.DirectoryEntity;
+import com.fiatalis.entity.Directory;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
@@ -20,14 +20,16 @@ public class SetDirCommand extends CommandsRun{
     @Override
     public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String name = null;
+        String name;
         try {
-            System.out.print("Введите директорию, для сохранения по умолчанию: ");
+            System.out.print("Введите директорию, для сохранения: ");
             name = reader.readLine();
-            if (name.length() < 1) name = null;
+            if (name.length() < 1){
+                name = null;
+            }
+            Directory.getInstance().setName(name);
         } catch (IOException e) {
         }
-        new DirectoryEntity(name).saveEntity();
     }
 
     @Override

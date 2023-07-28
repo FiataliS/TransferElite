@@ -1,7 +1,6 @@
 package com.fiatalis.utils;
 
 import com.fiatalis.entity.*;
-import lombok.Data;
 import org.ini4j.Profile.*;
 import org.ini4j.Wini;
 
@@ -11,12 +10,22 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-@Data
 public class ConfigUtils {
     private Wini ini;
-    private final String INI_FILE = "save/TransferEliteConfig.ini";
+    private final String INI_FILE = "config/TransferEliteConfig.ini";
+    private boolean getIsDir = checkFileIni();
 
     public ConfigUtils() {
+        if (getIsDir) {
+            iniWrite();
+            extractUser();
+            extractDirectory();
+            extractConnect();
+            extractServer();
+        }
+    }
+
+    public void iniWrite() {
         try {
             ini = new Wini(getFile());
         } catch (IOException e) {
@@ -24,35 +33,96 @@ public class ConfigUtils {
         }
     }
 
-    public void addNewOrUpdate(Entity entity) {
-        String sectionName = entity.getKey().toString();
-        for (int i = 0; i < entity.getOptionName().length; i++) {
-            ini.put(sectionName, entity.getOptionName()[i], entity.getObjectValue()[i]);
-        }
-        updateIniFile();
+    public void setGetIsDir(boolean getIsDir) {
+        this.getIsDir = getIsDir;
     }
 
-    public Entity getEntity(EntityEnum name) {
-        String[] objectValue = new String[2];
-        Set<Map.Entry<String, Section>> sections = ini.entrySet();
-        for (Map.Entry<String, Section> s : sections) {
-            if (s.getKey().equals(name.toString())) {
-                objectValue = s.getValue().values().toArray(String[]::new);
+    private static volatile ConfigUtils instance;
+
+    public static ConfigUtils getInstance() {
+        ConfigUtils localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ConfigUtils.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ConfigUtils();
+                }
             }
         }
-        Entity entity = null;
-        switch (name) {
-            case USER:
-                entity = new User(objectValue[0], objectValue[1]);
-                break;
-            case SERVER_ADDRESS:
-                entity = new ServerAddress(objectValue[0], objectValue[1]);
-                break;
-            case CONNECT_ADDRESS:
-                entity = new ConnectAddress(objectValue[0], objectValue[1]);
-                break;
+        return localInstance;
+    }
+
+    public void recordDir() {
+        if (getIsDir) {
+            ini.put("Directory", "name", Directory.getInstance().getName());
+            updateIniFile();
         }
-        return entity;
+    }
+
+    public void recordUser() {
+        if (getIsDir) {
+            ini.put("User", "name", User.getInstance().getName());
+            ini.put("User", "pass", User.getInstance().getPassHash());
+            updateIniFile();
+        }
+    }
+
+    public void recordServer(){
+        if (getIsDir) {
+            ini.put("Server", "address", ServerAddress.getInstance().getName());
+            ini.put("Server", "port", ServerAddress.getInstance().getPort());
+            updateIniFile();
+        }
+    }
+
+    public void recordConnect(){
+        if (getIsDir) {
+            ini.put("Connect", "address", ConnectAddress.getInstance().getName());
+            ini.put("Connect", "port", ConnectAddress.getInstance().getPort());
+            updateIniFile();
+        }
+    }
+
+    public void extractDirectory() {
+        if (getIsDir) {
+            String name = ini.get("Directory", "name");
+            if (name != null) {
+                Directory.getInstance().setName(name);
+            }
+        }
+    }
+
+    public void extractUser() {
+        if (getIsDir) {
+            String user  = ini.get("User", "name");
+            String pass = ini.get("User", "pass");
+            if (user != null && pass != null) {
+                User.getInstance().setName(user);
+                User.getInstance().setPassHash(pass);
+            }
+        }
+    }
+
+    public void extractServer() {
+        if (getIsDir) {
+            String address  = ini.get("Server", "address");
+            String port = ini.get("Server", "port");
+            if (address != null && port != null) {
+                ServerAddress.getInstance().setName(address);
+                ServerAddress.getInstance().setPort(port);
+            }
+        }
+    }
+
+    public void extractConnect() {
+        if (getIsDir) {
+            String address  = ini.get("Connect", "address");
+            String port = ini.get("Connect", "port");
+            if (address != null && port != null) {
+                ConnectAddress.getInstance().setName(address);
+                ConnectAddress.getInstance().setPort(port);
+            }
+        }
     }
 
     private void updateIniFile() {
@@ -65,7 +135,7 @@ public class ConfigUtils {
 
     private File getFile() {
         File file = new File(INI_FILE);
-        if (!file.exists()) {
+        if (!checkFileIni()) {
             file.getParentFile().mkdirs();
             try {
                 file.createNewFile();
@@ -76,13 +146,11 @@ public class ConfigUtils {
         return file;
     }
 
-    private String getSectionName(Entity entity) {
-        Set<Map.Entry<String, Section>> sections = ini.entrySet();
-        for (Map.Entry<String, Section> s : sections) {
-            if (s.getValue().get(entity.getOptionName()[0]).equals(entity.getObjectValue()[0])) {
-                return s.getKey();
-            }
+    private boolean checkFileIni() {
+        File file = new File(INI_FILE);
+        if (!file.exists()) {
+            return false;
         }
-        return entity.getKey().toString();
+        return true;
     }
 }

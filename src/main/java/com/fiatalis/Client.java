@@ -1,10 +1,9 @@
 package com.fiatalis;
 
 import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.Directory;
 import com.fiatalis.entity.ServerAddress;
-import com.fiatalis.entity.User;
 import com.fiatalis.modelMessage.*;
-import com.fiatalis.utils.ThreadServerUtils;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import lombok.Data;
@@ -21,7 +20,7 @@ import java.util.List;
 public class Client {
     private List<String> clientView = new ArrayList<>();
     private List<String> serverView = new ArrayList<>();
-    private Path clientDir = Paths.get("clientDir");
+    private Path clientDir = Paths.get(Directory.getInstance().getName());
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
     private ServerAddress serverAddress = new ServerAddress();
@@ -33,7 +32,7 @@ public class Client {
     public static Client getInstance() {
         Client localInstance = instance;
         if (localInstance == null) {
-            synchronized (ThreadServerUtils.class) {
+            synchronized (Client.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new Client();
@@ -45,7 +44,7 @@ public class Client {
 
     public void connect(ConnectAddress connectAddress) {
         try {
-            Socket socket = new Socket(connectAddress.getObjectValue()[0], Integer.parseInt(connectAddress.getObjectValue()[1]));
+            Socket socket = new Socket(ConnectAddress.getInstance().getName(), Integer.parseInt(ConnectAddress.getInstance().getPort()));
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());
@@ -56,7 +55,7 @@ public class Client {
                 socket.close();
             }
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println("Сервер отсутствует");
         }
     }
 
@@ -94,11 +93,11 @@ public class Client {
         }
     }
 
-    public void authentication(User user) {
+    public void authentication(String name, String pass) {
         if (!isAuthorized) {
-            if (user.getEntity().getObjectValue()[0].length() > 0) {
+            if (name.length() > 0) {
                 try {
-                    oos.writeObject(new AuthServ(user.getEntity().getObjectValue()[0], user.getEntity().getObjectValue()[1], isAuthorized));
+                    oos.writeObject(new AuthServ(name, pass, isAuthorized));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -30,7 +30,8 @@ public class SetConnectCommand extends CommandsRun {
             if (port.length() < 1) port = null;
         } catch (IOException e) {
         }
-        new ConnectAddress(name, port).saveEntity();
+        ConnectAddress.getInstance().setName(name);
+        ConnectAddress.getInstance().setPort(port);
     }
 
     @Override

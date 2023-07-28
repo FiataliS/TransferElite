@@ -21,7 +21,7 @@ public class CommandHandler {
             case STOP:
                 command = new StopCommand(attribute);
                 break;
-            case OPTIONS:
+            case OPT:
                 command = new OptionsCommand(attribute);
                 break;
             case SET_USER:
@@ -37,6 +37,9 @@ public class CommandHandler {
                 command = new ExitCommand(attribute);
                 break;
             case SPACE:
+                break;
+            case SAVE_OPT:
+                command = new SaveIniCommand(attribute);
                 break;
             case CONNECT:
                 command = new ConnectCommand(attribute);
