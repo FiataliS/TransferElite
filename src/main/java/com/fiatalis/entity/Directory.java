@@ -1,16 +1,15 @@
 package com.fiatalis.entity;
 
-import lombok.Data;
+import com.fiatalis.utils.ConfigUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Data
 public class Directory {
     String name;
 
-    {
+    public Directory() {
         name = "TransferDirectory";
         setDir(Path.of(name));
     }
@@ -20,6 +19,10 @@ public class Directory {
             this.name = name;
             setDir(Path.of(name));
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     private static volatile Directory instance;

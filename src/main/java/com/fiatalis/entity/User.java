@@ -1,29 +1,33 @@
 package com.fiatalis.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fiatalis.utils.ConfigUtils;
 
-@Getter
-@NoArgsConstructor
 public class User {
     private String name;
     private String password;
     private int passHash;
     private static volatile User instance;
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-        this.passHash = password.hashCode();
+    public String getName() {
+        return name;
+    }
+
+    public int getPassHash() {
+        return passHash;
     }
 
     public void setName(String name) {
         this.name = name;
+
     }
 
     public void setPassword(String password) {
         this.password = password;
         this.passHash = password.hashCode();
+    }
+
+    public void setPassHash(String passHash){
+        this.passHash = Integer.parseInt(passHash);
     }
 
     public static User getInstance() {

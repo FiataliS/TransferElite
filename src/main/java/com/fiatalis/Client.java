@@ -3,7 +3,6 @@ package com.fiatalis;
 import com.fiatalis.entity.ConnectAddress;
 import com.fiatalis.entity.Directory;
 import com.fiatalis.entity.ServerAddress;
-import com.fiatalis.entity.User;
 import com.fiatalis.modelMessage.*;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;

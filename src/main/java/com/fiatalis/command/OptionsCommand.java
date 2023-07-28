@@ -19,7 +19,7 @@ public class OptionsCommand extends CommandsRun {
 
     @Override
     public void run() {
-        Utils.printConsole(User.getInstance()+ "\n" + ConnectAddress.getInstance() + "\n" + ServerAddress.getInstance() + "\n" + Directory.getInstance());
+        Utils.printConsole(User.getInstance() + "\n" + ConnectAddress.getInstance() + "\n" + ServerAddress.getInstance() + "\n" + Directory.getInstance());
     }
 
     @Override

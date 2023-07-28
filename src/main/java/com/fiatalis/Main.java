@@ -5,6 +5,7 @@ import com.fiatalis.entity.Directory;
 import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.entity.User;
 import com.fiatalis.handler.CommandHandler;
+import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
@@ -24,12 +25,14 @@ public class Main {
     }
 
     private static void init(){
+        ConfigUtils.getInstance();
+        User.getInstance();
+        Directory.getInstance();
+        ServerAddress.getInstance();
+        ConnectAddress.getInstance();
+
         Client.getInstance();
         EchoServer.getInstance();
-        User.getInstance();
-        ServerAddress.getInstance();
-        Directory.getInstance();
-        ConnectAddress.getInstance();
     }
 
 }
