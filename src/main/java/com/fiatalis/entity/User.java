@@ -1,7 +1,5 @@
 package com.fiatalis.entity;
 
-import com.fiatalis.utils.ConfigUtils;
-
 public class User {
     private String name;
     private String password;

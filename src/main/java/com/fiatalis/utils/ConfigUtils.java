@@ -33,10 +33,6 @@ public class ConfigUtils {
         }
     }
 
-    public boolean isGetIsDir() {
-        return getIsDir;
-    }
-
     public void setGetIsDir(boolean getIsDir) {
         this.getIsDir = getIsDir;
     }
