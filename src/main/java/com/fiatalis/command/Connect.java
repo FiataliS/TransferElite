@@ -2,16 +2,15 @@ package com.fiatalis.command;
 
 import com.fiatalis.Client;
 import com.fiatalis.entity.ConnectAddress;
-import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ConnectCommand extends CommandsRun {
+public class Connect extends CommandRun {
 
-    public ConnectCommand(Attribute attribute) {
+    public Connect(Attribute attribute) {
         super(attribute);
     }
 

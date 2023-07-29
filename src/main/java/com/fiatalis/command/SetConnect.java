@@ -7,8 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SetConnectCommand extends CommandsRun {
-    public SetConnectCommand(Attribute attribute) {
+public class SetConnect extends CommandRun {
+    public SetConnect(Attribute attribute) {
         super(attribute);
     }
 

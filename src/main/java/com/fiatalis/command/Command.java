@@ -1,6 +1,6 @@
 package com.fiatalis.command;
 
-public interface Commands {
+public interface Command {
     void handler();
     void help();
 }

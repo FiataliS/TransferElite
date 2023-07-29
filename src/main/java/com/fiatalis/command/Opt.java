@@ -6,9 +6,9 @@ import com.fiatalis.entity.ServerAddress;
 import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
-public class OptionsCommand extends CommandsRun {
+public class Opt extends CommandRun {
 
-    public OptionsCommand(Attribute attribute) {
+    public Opt(Attribute attribute) {
         super(attribute);
     }
 

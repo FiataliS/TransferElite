@@ -1,31 +1,33 @@
 package com.fiatalis.command;
 
-import com.fiatalis.entity.User;
+import com.fiatalis.entity.Directory;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SetUserCommand extends CommandsRun {
-
-    public SetUserCommand(Attribute attribute) {
+public class SetDir extends CommandRun {
+    public SetDir(Attribute attribute) {
         super(attribute);
     }
 
     @Override
     public void help() {
-        Utils.printConsole("Это команда создаст нового пользователя");
+        Utils.printConsole("Это команда создаст/изменит директорию по умолчанию.");
     }
 
     @Override
     public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String name;
         try {
-            System.out.print("Введите имя пользователя: ");
-            User.getInstance().setName(reader.readLine().trim());
-            System.out.print("Введите пороль: ");
-            User.getInstance().setPassword(reader.readLine().trim());
+            System.out.print("Введите директорию, для сохранения: ");
+            name = reader.readLine();
+            if (name.length() < 1){
+                name = null;
+            }
+            Directory.getInstance().setName(name);
         } catch (IOException e) {
         }
     }

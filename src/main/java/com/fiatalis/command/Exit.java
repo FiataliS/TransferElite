@@ -2,8 +2,8 @@ package com.fiatalis.command;
 
 import com.fiatalis.utils.Utils;
 
-public class ExitCommand extends CommandsRun {
-    public ExitCommand(Attribute attribute) {
+public class Exit extends CommandRun {
+    public Exit(Attribute attribute) {
         super(attribute);
     }
 

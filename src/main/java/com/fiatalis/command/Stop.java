@@ -1,23 +1,24 @@
 package com.fiatalis.command;
 
+
 import com.fiatalis.EchoServer;
 import com.fiatalis.utils.Utils;
 
 
-public class StartCommand extends CommandsRun {
+public class Stop extends CommandRun {
 
-    public StartCommand(Attribute attribute) {
+    public Stop(Attribute attribute) {
         super(attribute);
     }
 
     @Override
     public void help() {
-        Utils.printConsole("Команда Start запускает сервер");
+        Utils.printConsole("Команда Stop выкдючает сервер");
     }
 
     @Override
     public void run() {
-        EchoServer.getInstance().startServer();
+        EchoServer.getInstance().stopServer();
     }
 
     @Override

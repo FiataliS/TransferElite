@@ -3,11 +3,9 @@ package com.fiatalis.command;
 import com.fiatalis.Client;
 import com.fiatalis.utils.Utils;
 
-public class LsCommand extends CommandsRun {
+public class Ls extends CommandRun {
 
-    public LsCommand(Attribute attribute) {
-        super(attribute);
-    }
+    public Ls(Attribute attribute) {super(attribute);}
 
     @Override
     public void help() {

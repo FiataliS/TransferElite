@@ -16,8 +16,11 @@ public enum CommandsEnum {
     CONNECT,
     SET_USER,
     SET_SERVER,
+    SERVER,
+    USER,
     SAVE_OPT,
     GET,
+    HELP,
     PUT,
     SET_CONNECT
 }

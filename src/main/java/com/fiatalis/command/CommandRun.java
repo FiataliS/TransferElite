@@ -1,9 +1,9 @@
 package com.fiatalis.command;
 
-public abstract class CommandsRun implements Commands {
+public abstract class CommandRun implements Command {
     Attribute attribute;
 
-    public CommandsRun(Attribute attribute) {
+    public CommandRun(Attribute attribute) {
         this.attribute = attribute;
     }
 

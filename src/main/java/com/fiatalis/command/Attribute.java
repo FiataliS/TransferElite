@@ -2,88 +2,52 @@ package com.fiatalis.command;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 public class Attribute {
-    private CommandsEnum commandsEnum = CommandsEnum.NOT_FOUND;
+    private CommandsEnum command = CommandsEnum.NOT_FOUND;
+    private OptionsEnum options;
     private String attribute;
-    private String options;
 
-    private List<String> list;
+    private List<String> list = new ArrayList<>();
+    private String receivedString;
 
     public Attribute(String string) {
-        list = parsing(string);
+        if (string.length() < 1) command = CommandsEnum.SPACE;
+        receivedString = string;
+        parsing(string);
         searchCommand();
-        attribute = checkAttribute(1);
-        options = checkAttribute(2);
+        if (command.equals(CommandsEnum.NOT_FOUND) || command.equals(CommandsEnum.SPACE)) return;
+        searchOptions();
+        searchAttribute();
     }
 
-    private String checkAttribute(int check) {
-        try {
-            list.get(check);
-        } catch (IndexOutOfBoundsException e) {
-            return null;
+    private void searchAttribute() {
+        StringBuilder sb = new StringBuilder(receivedString.trim());
+        if (options != null) sb.delete(sb.length() - options.getOptions().length(), sb.length());
+        if (list.size() > 1) sb.delete(0, command.name().length());
+        attribute = sb.toString().trim();
+    }
+
+    private void searchOptions() {
+        for (int i = 0; i < OptionsEnum.values().length; i++) {
+            if (OptionsEnum.values()[i].getOptions().equals(list.get(list.size() - 1).toUpperCase())) {
+                options = OptionsEnum.values()[i];
+            }
         }
-        return list.get(check);
     }
-
 
     private void searchCommand() {
-
-        if (checkAttribute(0).toUpperCase().equals("SET") && list.size() >= 2) {
-            switch (checkAttribute(1).toUpperCase()) {
-                case "USER":
-                    commandsEnum = CommandsEnum.SET_USER;
-                    break;
-                case "SERVER":
-                    commandsEnum = CommandsEnum.SET_SERVER;
-                    break;
-                case "CONNECT":
-                    commandsEnum = CommandsEnum.SET_CONNECT;
-                    break;
-            }
-            list.remove(0);
-            list.set(0, commandsEnum.toString());
-        }
-
-        if (checkAttribute(0).toUpperCase().equals("SAVE") && list.size() >= 2) {
-            if (checkAttribute(1).toUpperCase().equals("OPT")) {
-                commandsEnum = CommandsEnum.SAVE_OPT;
-            }
-            list.remove(0);
-            list.set(0, commandsEnum.toString());
-        }
-
-        if (list.get(0).toUpperCase().equals("GET") && list.size() >= 2 || list.get(0).toUpperCase().equals("PUT") && list.size() >= 2) {
-            if (checkAttribute(list.size() - 1).toUpperCase().equals("-D")) {
-                options = "-d";
-                list.remove(list.size() - 1);
-            } else {
-            }
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < list.size(); i++) {
-                sb.append(list.get(i) + " ");
-
-            }
-            list.set(1, sb.toString().trim());
-            if (checkAttribute(2) == null) {
-                list.add(options);
-            }
-            list.set(2, options);
-        }
         try {
-            commandsEnum = CommandsEnum.valueOf(checkAttribute(0).toUpperCase());
+            command = CommandsEnum.valueOf(list.get(0).toUpperCase());
         } catch (IllegalArgumentException e) {
         }
     }
 
-    private List<String> parsing(String string) {
-        List<String> result = new ArrayList<>();
+    private void parsing(String string) throws NullPointerException {
         for (String s : string.split(" ")) {
-            result.add(s);
+            list.add(s);
         }
-        return result;
     }
 }

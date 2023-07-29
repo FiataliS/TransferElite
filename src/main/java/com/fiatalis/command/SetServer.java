@@ -7,8 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SetServerCommand extends CommandsRun {
-    public SetServerCommand(Attribute attribute) {
+public class SetServer extends CommandRun {
+    public SetServer(Attribute attribute) {
         super(attribute);
     }
 

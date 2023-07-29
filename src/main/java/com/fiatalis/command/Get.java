@@ -6,9 +6,9 @@ import com.fiatalis.utils.Utils;
 
 import java.io.IOException;
 
-public class GetCommand extends CommandsRun {
+public class Get extends CommandRun {
 
-    public GetCommand(Attribute attribute) {
+    public Get(Attribute attribute) {
         super(attribute);
     }
 

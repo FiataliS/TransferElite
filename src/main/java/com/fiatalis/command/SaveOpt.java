@@ -3,8 +3,8 @@ package com.fiatalis.command;
 import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;
 
-public class SaveIniCommand extends CommandsRun {
-    public SaveIniCommand(Attribute attribute) {
+public class SaveOpt extends CommandRun {
+    public SaveOpt(Attribute attribute) {
         super(attribute);
     }
 

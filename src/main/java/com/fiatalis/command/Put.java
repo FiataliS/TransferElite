@@ -8,8 +8,8 @@ import com.fiatalis.utils.Utils;
 import java.io.File;
 import java.io.IOException;
 
-public class PutCommand extends CommandsRun {
-    public PutCommand(Attribute attribute) {
+public class Put extends CommandRun {
+    public Put(Attribute attribute) {
         super(attribute);
     }
 
