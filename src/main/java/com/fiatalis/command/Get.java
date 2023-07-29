@@ -20,7 +20,7 @@ public class Get extends CommandRun {
 
     @Override
     public void optionsHandler() {
-        if (attribute.getOptions().equals(OptionsEnum.DELETE)) {
+        if (attribute.getOptions() == OptionsEnum.DELETE) {
             isDelete = true;
         }
         get();

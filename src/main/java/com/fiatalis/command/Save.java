@@ -15,7 +15,7 @@ public class Save extends CommandRun {
 
     @Override
     public void optionsHandler() {
-        if (attribute.getOptions().equals(OptionsEnum.OPT)) {
+        if (attribute.getOptions() == OptionsEnum.OPT) {
             getOpt();
         }
     }

@@ -9,7 +9,7 @@ public abstract class CommandRun implements Command {
 
     @Override
     public void handler() {
-        if (attribute.getOptions().equals(OptionsEnum.HELP)) {
+        if (attribute.getOptions() == OptionsEnum.HELP) {
             help();
         } else {
             optionsHandler();

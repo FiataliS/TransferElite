@@ -19,6 +19,11 @@ public class Connect extends CommandRun {
         Utils.printConsole("Это соединяется с сервером");
     }
 
+    @Override
+    public void optionsHandler() {
+        connect();
+    }
+
     private void connect() {
         Client client = Client.getInstance();
         ConnectAddress connectAddress = ConnectAddress.getInstance();
@@ -41,10 +46,5 @@ public class Connect extends CommandRun {
             return;
         }
         System.out.println("Подключение прошло успешно: " + connectAddress.getName() + ":" + connectAddress.getPort());
-    }
-
-    @Override
-    public void optionsHandler() {
-        connect();
     }
 }

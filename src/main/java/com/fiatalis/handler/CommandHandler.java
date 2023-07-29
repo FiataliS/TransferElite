@@ -43,6 +43,10 @@ public class CommandHandler {
                 break;
             case PUT:
                 command = new Put(attribute);
+                break;
+            case HELP:
+                command = new Help(attribute);
+                break;
             default:
                 System.out.println("Команда не наедена");
         }

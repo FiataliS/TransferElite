@@ -17,7 +17,7 @@ public class Put extends CommandRun {
 
     @Override
     public void help() {
-        Utils.printConsole("Загружает файл на сервера");
+        Utils.printConsole("Загружает файл на сервер");
     }
 
     private void put() {
@@ -50,7 +50,7 @@ public class Put extends CommandRun {
 
     @Override
     public void optionsHandler() {
-        if (attribute.getOptions().equals(OptionsEnum.DELETE)) isDelete = true;
+        if (attribute.getOptions() == OptionsEnum.DELETE) isDelete = true;
         put();
     }
 

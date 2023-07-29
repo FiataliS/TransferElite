@@ -26,6 +26,10 @@ public class Set extends CommandRun {
 
     @Override
     public void optionsHandler() {
+        if (attribute.getOptions() == null) {
+            System.out.println("Не введена опция обратитесь к помощи с помощью опции [-h]");
+            return;
+        }
         switch (attribute.getOptions()) {
             case CONNECT:
                 connect();
