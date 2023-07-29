@@ -14,10 +14,9 @@ public enum CommandsEnum {
     STOP,
     OPT,
     CONNECT,
-    SET_USER,
-    SET_SERVER,
-    SAVE_OPT,
+    SAVE,
     GET,
+    HELP,
     PUT,
-    SET_CONNECT
+    SET
 }

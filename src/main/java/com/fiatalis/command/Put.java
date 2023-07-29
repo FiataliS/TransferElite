@@ -8,8 +8,8 @@ import com.fiatalis.utils.Utils;
 import java.io.File;
 import java.io.IOException;
 
-public class PutCommand extends CommandsRun {
-    public PutCommand(Attribute attribute) {
+public class Put extends CommandRun {
+    public Put(Attribute attribute) {
         super(attribute);
     }
 
@@ -17,17 +17,10 @@ public class PutCommand extends CommandsRun {
 
     @Override
     public void help() {
-        Utils.printConsole("Загружает файл на сервера");
+        Utils.printConsole("Загружает файл на сервер");
     }
 
-    @Override
-    void run() {
-        try {
-            if (attribute.getOptions().equals("-d")) {
-                isDelete = true;
-            }
-        } catch (NullPointerException e) {
-        }
+    private void put() {
         if (Client.getInstance().getClientDir().resolve(attribute.getAttribute()).toFile().isDirectory() && checkFile(attribute.getAttribute())) {
             System.out.println("Пока папку передать не могу, но скоро возможность появится.");
         } else if (checkFile(attribute.getAttribute())) {
@@ -56,12 +49,9 @@ public class PutCommand extends CommandsRun {
     }
 
     @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        } else {
-            run();
-        }
+    public void optionsHandler() {
+        if (attribute.getOptions() == OptionsEnum.DELETE) isDelete = true;
+        put();
     }
 
     private Boolean checkFile(String fileName) {

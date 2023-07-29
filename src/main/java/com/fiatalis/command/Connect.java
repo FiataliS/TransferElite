@@ -2,16 +2,15 @@ package com.fiatalis.command;
 
 import com.fiatalis.Client;
 import com.fiatalis.entity.ConnectAddress;
-import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ConnectCommand extends CommandsRun {
+public class Connect extends CommandRun {
 
-    public ConnectCommand(Attribute attribute) {
+    public Connect(Attribute attribute) {
         super(attribute);
     }
 
@@ -21,7 +20,11 @@ public class ConnectCommand extends CommandsRun {
     }
 
     @Override
-    public void run() {
+    public void optionsHandler() {
+        connect();
+    }
+
+    private void connect() {
         Client client = Client.getInstance();
         ConnectAddress connectAddress = ConnectAddress.getInstance();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -43,12 +46,5 @@ public class ConnectCommand extends CommandsRun {
             return;
         }
         System.out.println("Подключение прошло успешно: " + connectAddress.getName() + ":" + connectAddress.getPort());
-    }
-
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
     }
 }

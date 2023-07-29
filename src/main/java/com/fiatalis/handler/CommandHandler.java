@@ -3,7 +3,7 @@ package com.fiatalis.handler;
 import com.fiatalis.command.*;
 
 public class CommandHandler {
-    private Commands command = null;
+    private Command command = null;
     Attribute attribute;
 
     public CommandHandler(String string) {
@@ -11,44 +11,42 @@ public class CommandHandler {
     }
 
     public void commandDefinition() {
-        switch (attribute.getCommandsEnum()) {
+        switch (attribute.getCommand()) {
             case LS:
-                command = new LsCommand(attribute);
+                command = new Ls(attribute);
                 break;
             case START:
-                command = new StartCommand(attribute);
+                command = new Start(attribute);
                 break;
             case STOP:
-                command = new StopCommand(attribute);
+                command = new Stop(attribute);
                 break;
             case OPT:
-                command = new OptionsCommand(attribute);
+                command = new Opt(attribute);
                 break;
-            case SET_USER:
-                command = new SetUserCommand(attribute);
-                break;
-            case SET_SERVER:
-                command = new SetServerCommand(attribute);
-                break;
-            case SET_CONNECT:
-                command = new SetConnectCommand(attribute);
+            case SET:
+                command = new Set(attribute);
                 break;
             case EXIT:
-                command = new ExitCommand(attribute);
+                command = new Exit(attribute);
                 break;
             case SPACE:
                 break;
-            case SAVE_OPT:
-                command = new SaveIniCommand(attribute);
+            case SAVE:
+                command = new Save(attribute);
                 break;
             case CONNECT:
-                command = new ConnectCommand(attribute);
+                command = new Connect(attribute);
                 break;
             case GET:
-                command = new GetCommand(attribute);
+                command = new Get(attribute);
                 break;
             case PUT:
-                command = new PutCommand(attribute);
+                command = new Put(attribute);
+                break;
+            case HELP:
+                command = new Help(attribute);
+                break;
             default:
                 System.out.println("Команда не наедена");
         }
