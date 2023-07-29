@@ -16,9 +16,14 @@ public class LsCommand extends CommandsRun {
 
     @Override
     public void run() {
-        Client.getInstance().updateServerViewPath();
-        while (Client.getInstance().getServerView().size() == 0);
-        Client.getInstance().getServerView().forEach(System.out::println);
+        try {
+            Client.getInstance().updateServerViewPath();
+            while (Client.getInstance().getServerView().size() == 0);
+            Client.getInstance().getServerView().forEach(System.out::println);
+        } catch (NullPointerException e){
+            System.out.println("Требуется соедениться с сервером");
+        }
+        
     }
 
     @Override

@@ -23,10 +23,13 @@ public class PutCommand extends CommandsRun {
     @Override
     void run() {
         try {
-            if (attribute.getOptions().equals("-d")) {isDelete = true;}
-        }catch (NullPointerException e){}
+            if (attribute.getOptions().equals("-d")) {
+                isDelete = true;
+            }
+        } catch (NullPointerException e) {
+        }
         if (Client.getInstance().getClientDir().resolve(attribute.getAttribute()).toFile().isDirectory() && checkFile(attribute.getAttribute())) {
-            System.out.println("Попа папку передать не могу, но скоро возможность появится.");
+            System.out.println("Пока папку передать не могу, но скоро возможность появится.");
         } else if (checkFile(attribute.getAttribute())) {
             String item = attribute.getAttribute();
             File selected = Client.getInstance().getClientDir().resolve(item).toFile();
@@ -40,8 +43,6 @@ public class PutCommand extends CommandsRun {
         } else {
             System.out.println("!");
         }
-
-
 
         if (checkFile(attribute.getAttribute())) {
             try {
@@ -64,7 +65,12 @@ public class PutCommand extends CommandsRun {
     }
 
     private Boolean checkFile(String fileName) {
-        return Client.getInstance().getServerView().stream().anyMatch(s -> s.equals(fileName));
+        for (String s : Client.getInstance().updateClientViewPath()) {
+            if (s.equals(fileName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void deleteFile(File file, String name) {

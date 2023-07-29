@@ -18,9 +18,9 @@ import java.util.List;
 
 @Data
 public class Client {
+    private Path clientDir = Paths.get(Directory.getInstance().getName());
     private List<String> clientView = new ArrayList<>();
     private List<String> serverView = new ArrayList<>();
-    private Path clientDir = Paths.get(Directory.getInstance().getName());
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
     private ServerAddress serverAddress = new ServerAddress();
@@ -59,7 +59,8 @@ public class Client {
             System.out.println("Сервер отсутствует");
         }
     }
-    public void disconnect(){
+
+    public void disconnect() {
         try {
             socket.close();
         } catch (IOException e) {
@@ -100,6 +101,17 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Ошибка соединения");
         }
+    }
+
+    public List<String> updateClientViewPath() {
+        ListMessage listMessage;
+        try {
+            listMessage = new ListMessage(clientDir);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        clientView = listMessage.getFiles();
+        return clientView;
     }
 
     public void authentication(String name, String pass) {
