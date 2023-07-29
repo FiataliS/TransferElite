@@ -16,23 +16,11 @@ public class Start extends CommandRun {
     }
 
     @Override
-    public void run() {
+    public void optionsHandler() {
+        start();
+    }
+
+    public void start() {
         EchoServer.getInstance().startServer();
-    }
-
-    @Override
-    public void handler() {
-        if (super.attribute.getAttribute() == null) {
-            run();
-        } else {
-            attributeHandler();
-        }
-    }
-
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
     }
 }

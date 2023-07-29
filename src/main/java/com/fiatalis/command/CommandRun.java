@@ -7,16 +7,14 @@ public abstract class CommandRun implements Command {
         this.attribute = attribute;
     }
 
-    abstract void run();
-
     @Override
     public void handler() {
-        if (attribute.getAttribute() == null) {
-            run();
+        if (attribute.getOptions().equals(OptionsEnum.HELP)) {
+            help();
         } else {
-            attributeHandler();
+            optionsHandler();
         }
     }
 
-    abstract void attributeHandler();
+    abstract void optionsHandler();
 }

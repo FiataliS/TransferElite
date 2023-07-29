@@ -24,22 +24,16 @@ public class CommandHandler {
             case OPT:
                 command = new Opt(attribute);
                 break;
-            case SET_USER:
-                command = new SetUser(attribute);
-                break;
-            case SET_SERVER:
-                command = new SetServer(attribute);
-                break;
-            case SET_CONNECT:
-                command = new SetConnect(attribute);
+            case SET:
+                command = new Set(attribute);
                 break;
             case EXIT:
                 command = new Exit(attribute);
                 break;
             case SPACE:
                 break;
-            case SAVE_OPT:
-                command = new SaveOpt(attribute);
+            case SAVE:
+                command = new Save(attribute);
                 break;
             case CONNECT:
                 command = new Connect(attribute);

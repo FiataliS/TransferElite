@@ -7,25 +7,26 @@ import com.fiatalis.utils.Utils;
 import java.io.IOException;
 
 public class Get extends CommandRun {
+    boolean isDelete = false;
 
     public Get(Attribute attribute) {
         super(attribute);
     }
 
-    boolean isDelete = false;
-
     @Override
-    public void help()  {
+    public void help() {
         Utils.printConsole("Загружает файл с сервера");
     }
 
     @Override
-    void run() {
-        try {
-            if (attribute.getOptions().equals("-d")) {isDelete = true;}
-        }catch (NullPointerException e){}
+    public void optionsHandler() {
+        if (attribute.getOptions().equals(OptionsEnum.DELETE)) {
+            isDelete = true;
+        }
+        get();
+    }
 
-
+    private void get() {
         if (checkFile(attribute.getAttribute())) {
             try {
                 Client.getInstance().getOos().writeObject(new FileRequest(attribute.getAttribute(), isDelete));
@@ -34,15 +35,6 @@ public class Get extends CommandRun {
             }
         } else {
             System.out.println("Имя файла введено не корректно!");
-        }
-    }
-
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        } else {
-            run();
         }
     }
 

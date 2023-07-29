@@ -13,14 +13,11 @@ public class Exit extends CommandRun {
     }
 
     @Override
-    void run() {
-        System.exit(0);
+    public void optionsHandler() {
+        exit();
     }
 
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
+    private void exit() {
+        System.exit(0);
     }
 }

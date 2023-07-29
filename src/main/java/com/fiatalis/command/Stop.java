@@ -17,23 +17,11 @@ public class Stop extends CommandRun {
     }
 
     @Override
-    public void run() {
+    public void optionsHandler() {
+        stop();
+    }
+
+    public void stop() {
         EchoServer.getInstance().stopServer();
-    }
-
-    @Override
-    public void handler() {
-        if (super.attribute.getAttribute() == null) {
-            run();
-        } else {
-            attributeHandler();
-        }
-    }
-
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
     }
 }

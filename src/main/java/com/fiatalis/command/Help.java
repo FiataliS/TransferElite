@@ -7,16 +7,15 @@ public class Help extends  CommandRun {
 
     @Override
     public void help() {
+        System.out.println("Помощь");
+    }
 
+    private void helpRun() {
+        System.out.println("команда не доработана");
     }
 
     @Override
-    void run() {
-
-    }
-
-    @Override
-    void attributeHandler() {
-
+    void optionsHandler() {
+        help();
     }
 }

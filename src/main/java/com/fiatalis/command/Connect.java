@@ -19,8 +19,7 @@ public class Connect extends CommandRun {
         Utils.printConsole("Это соединяется с сервером");
     }
 
-    @Override
-    public void run() {
+    private void connect() {
         Client client = Client.getInstance();
         ConnectAddress connectAddress = ConnectAddress.getInstance();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -45,9 +44,7 @@ public class Connect extends CommandRun {
     }
 
     @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
+    public void optionsHandler() {
+        connect();
     }
 }

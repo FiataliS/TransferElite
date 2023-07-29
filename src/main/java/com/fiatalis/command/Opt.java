@@ -18,14 +18,11 @@ public class Opt extends CommandRun {
     }
 
     @Override
-    public void run() {
-        Utils.printConsole(User.getInstance() + "\n" + ConnectAddress.getInstance() + "\n" + ServerAddress.getInstance() + "\n" + Directory.getInstance());
+    public void optionsHandler() {
+        opt();
     }
 
-    @Override
-    public void attributeHandler() {
-        if (super.attribute.getAttribute().equals("help")) {
-            help();
-        }
+    private void opt() {
+        Utils.printConsole(User.getInstance() + "\n" + ConnectAddress.getInstance() + "\n" + ServerAddress.getInstance() + "\n" + Directory.getInstance());
     }
 }
