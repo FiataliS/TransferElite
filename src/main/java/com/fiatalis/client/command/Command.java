@@ -1,4 +1,4 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
 public interface Command {
     void handler();

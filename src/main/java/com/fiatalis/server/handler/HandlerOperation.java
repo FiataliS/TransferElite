@@ -1,4 +1,4 @@
-package com.fiatalis.handler;
+package com.fiatalis.server.handler;
 
 import com.fiatalis.modelMessage.*;
 import com.fiatalis.utils.AuthServiceUtils;

@@ -1,6 +1,6 @@
-package com.fiatalis.handler;
+package com.fiatalis.client;
 
-import com.fiatalis.command.*;
+import com.fiatalis.client.command.*;
 
 public class CommandHandler {
     private Command command = null;
@@ -30,8 +30,6 @@ public class CommandHandler {
             case EXIT:
                 command = new Exit(attribute);
                 break;
-            case SPACE:
-                break;
             case SAVE:
                 command = new Save(attribute);
                 break;
@@ -46,6 +44,8 @@ public class CommandHandler {
                 break;
             case HELP:
                 command = new Help(attribute);
+                break;
+            case SPACE:
                 break;
             default:
                 System.out.println("Команда не наедена");

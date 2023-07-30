@@ -1,8 +1,8 @@
-package com.fiatalis;
+package com.fiatalis.client;
 
-import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.Server;
 import com.fiatalis.modelMessage.*;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
@@ -23,7 +23,7 @@ public class Client {
     private List<String> serverView = new ArrayList<>();
     private ObjectEncoderOutputStream oos;
     private ObjectDecoderInputStream ois;
-    private ServerAddress serverAddress = new ServerAddress();
+    private Server server = new Server();
     private boolean isAuthorized = false;
     Socket socket;
 
@@ -43,9 +43,9 @@ public class Client {
         return localInstance;
     }
 
-    public void connect(ConnectAddress connectAddress) {
+    public void connect(Connect connect) {
         try {
-            socket = new Socket(ConnectAddress.getInstance().getName(), Integer.parseInt(ConnectAddress.getInstance().getPort()));
+            socket = new Socket(Connect.getInstance().getName(), Integer.parseInt(Connect.getInstance().getPort()));
             Thread readThread = new Thread(this::read);
             if (isAuthorized == false) {
                 oos = new ObjectEncoderOutputStream(socket.getOutputStream());

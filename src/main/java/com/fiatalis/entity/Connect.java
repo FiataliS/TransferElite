@@ -3,22 +3,22 @@ package com.fiatalis.entity;
 import lombok.Data;
 
 @Data
-public class ConnectAddress extends ServerAddress {
+public class Connect extends Server {
 
-    private static volatile ConnectAddress instance;
+    private static volatile Connect instance;
 
     {
         super.name = null;
         super.port = null;
     }
 
-    public static ConnectAddress getInstance() {
-        ConnectAddress localInstance = instance;
+    public static Connect getInstance() {
+        Connect localInstance = instance;
         if (localInstance == null) {
-            synchronized (ConnectAddress.class) {
+            synchronized (Connect.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ConnectAddress();
+                    instance = localInstance = new Connect();
                 }
             }
         }

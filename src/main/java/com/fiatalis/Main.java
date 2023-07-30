@@ -1,10 +1,12 @@
 package com.fiatalis;
 
-import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.client.Client;
+import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.Server;
 import com.fiatalis.entity.User;
-import com.fiatalis.handler.CommandHandler;
+import com.fiatalis.client.CommandHandler;
+import com.fiatalis.server.EchoServer;
 import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;
 
@@ -28,8 +30,8 @@ public class Main {
         ConfigUtils.getInstance();
         User.getInstance();
         Directory.getInstance();
-        ServerAddress.getInstance();
-        ConnectAddress.getInstance();
+        Server.getInstance();
+        Connect.getInstance();
 
         Client.getInstance();
         EchoServer.getInstance();

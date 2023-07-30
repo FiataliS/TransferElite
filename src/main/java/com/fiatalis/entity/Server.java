@@ -3,11 +3,11 @@ package com.fiatalis.entity;
 import lombok.Getter;
 
 @Getter
-public class ServerAddress {
+public class Server {
     String name;
     String port;
 
-    private static volatile ServerAddress instance;
+    private static volatile Server instance;
 
     {
         name = "localhost";
@@ -28,13 +28,13 @@ public class ServerAddress {
         this.port = port;
     }
 
-    public static ServerAddress getInstance() {
-        ServerAddress localInstance = instance;
+    public static Server getInstance() {
+        Server localInstance = instance;
         if (localInstance == null) {
-            synchronized (ServerAddress.class) {
+            synchronized (Server.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ServerAddress();
+                    instance = localInstance = new Server();
                 }
             }
         }

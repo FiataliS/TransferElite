@@ -1,6 +1,6 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
-import com.fiatalis.Client;
+import com.fiatalis.client.Client;
 import com.fiatalis.modelMessage.FileRequest;
 import com.fiatalis.utils.Utils;
 

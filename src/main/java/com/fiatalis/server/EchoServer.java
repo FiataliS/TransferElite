@@ -1,7 +1,7 @@
-package com.fiatalis;
+package com.fiatalis.server;
 
-import com.fiatalis.entity.ServerAddress;
-import com.fiatalis.handler.CloudMessageHandler;
+import com.fiatalis.entity.Server;
+import com.fiatalis.server.handler.CloudMessageHandler;
 import com.fiatalis.utils.Utils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -77,7 +77,7 @@ public class EchoServer {
                             );
                         }
                     });
-            channelFuture = bootstrap.bind(Integer.parseInt(ServerAddress.getInstance().getPort())).sync();
+            channelFuture = bootstrap.bind(Integer.parseInt(Server.getInstance().getPort())).sync();
             System.out.println("Server started...");
             Utils.addPrefix();
             channelFuture.channel().closeFuture().sync(); // block

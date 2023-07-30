@@ -1,8 +1,8 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
-import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.Server;
 import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
@@ -23,6 +23,6 @@ public class Opt extends CommandRun {
     }
 
     private void opt() {
-        Utils.printConsole(User.getInstance() + "\n" + ConnectAddress.getInstance() + "\n" + ServerAddress.getInstance() + "\n" + Directory.getInstance());
+        Utils.printConsole(User.getInstance() + "\n" + Connect.getInstance() + "\n" + Server.getInstance() + "\n" + Directory.getInstance());
     }
 }

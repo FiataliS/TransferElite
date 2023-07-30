@@ -1,4 +1,4 @@
-package com.fiatalis.handler;
+package com.fiatalis.server.handler;
 
 
 import com.fiatalis.entity.Directory;
@@ -9,8 +9,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.BiConsumer;
-
-import static com.fiatalis.handler.HandlerOperation.HANDLER_MAP;
 
 public class CloudMessageHandler extends SimpleChannelInboundHandler<CloudMessage> {
 
@@ -32,7 +30,7 @@ public class CloudMessageHandler extends SimpleChannelInboundHandler<CloudMessag
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CloudMessage cloudMessage) throws Exception {
         BiConsumer<ChannelHandlerContext, CloudMessage> channelHandlerContextCloudMessageBiConsumer =
-              HANDLER_MAP.get(cloudMessage.getMessageType());
+              HandlerOperation.HANDLER_MAP.get(cloudMessage.getMessageType());
         channelHandlerContextCloudMessageBiConsumer.accept(ctx, cloudMessage);
     }
 

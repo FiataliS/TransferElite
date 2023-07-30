@@ -1,4 +1,4 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
 public class Help extends  CommandRun {
     public Help(Attribute attribute) {

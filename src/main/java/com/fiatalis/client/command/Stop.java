@@ -1,7 +1,7 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
 
-import com.fiatalis.EchoServer;
+import com.fiatalis.server.EchoServer;
 import com.fiatalis.utils.Utils;
 
 

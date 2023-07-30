@@ -1,14 +1,11 @@
 package com.fiatalis.utils;
 
 import com.fiatalis.entity.*;
-import org.ini4j.Profile.*;
 import org.ini4j.Wini;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
 
 public class ConfigUtils {
     private Wini ini;
@@ -69,16 +66,16 @@ public class ConfigUtils {
 
     public void recordServer(){
         if (getIsDir) {
-            ini.put("Server", "address", ServerAddress.getInstance().getName());
-            ini.put("Server", "port", ServerAddress.getInstance().getPort());
+            ini.put("Server", "address", Server.getInstance().getName());
+            ini.put("Server", "port", Server.getInstance().getPort());
             updateIniFile();
         }
     }
 
     public void recordConnect(){
         if (getIsDir) {
-            ini.put("Connect", "address", ConnectAddress.getInstance().getName());
-            ini.put("Connect", "port", ConnectAddress.getInstance().getPort());
+            ini.put("Connect", "address", Connect.getInstance().getName());
+            ini.put("Connect", "port", Connect.getInstance().getPort());
             updateIniFile();
         }
     }
@@ -108,8 +105,8 @@ public class ConfigUtils {
             String address  = ini.get("Server", "address");
             String port = ini.get("Server", "port");
             if (address != null && port != null) {
-                ServerAddress.getInstance().setName(address);
-                ServerAddress.getInstance().setPort(port);
+                Server.getInstance().setName(address);
+                Server.getInstance().setPort(port);
             }
         }
     }
@@ -119,8 +116,8 @@ public class ConfigUtils {
             String address  = ini.get("Connect", "address");
             String port = ini.get("Connect", "port");
             if (address != null && port != null) {
-                ConnectAddress.getInstance().setName(address);
-                ConnectAddress.getInstance().setPort(port);
+                Connect.getInstance().setName(address);
+                Connect.getInstance().setPort(port);
             }
         }
     }

@@ -1,8 +1,8 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
-import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.ServerAddress;
+import com.fiatalis.entity.Server;
 import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
@@ -61,9 +61,9 @@ public class Set extends CommandRun {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             System.out.print("Введите адресс сервера, по умолчанию будет localhost: ");
-            ServerAddress.getInstance().setName(reader.readLine());
+            Server.getInstance().setName(reader.readLine());
             System.out.print("Введите порт, по умолчанию будет 8797: ");
-            ServerAddress.getInstance().setPort(reader.readLine());
+            Server.getInstance().setPort(reader.readLine());
         } catch (IOException e) {
         }
     }
@@ -95,7 +95,7 @@ public class Set extends CommandRun {
             if (port.length() < 1) port = null;
         } catch (IOException e) {
         }
-        ConnectAddress.getInstance().setName(name);
-        ConnectAddress.getInstance().setPort(port);
+        Connect.getInstance().setName(name);
+        Connect.getInstance().setPort(port);
     }
 }

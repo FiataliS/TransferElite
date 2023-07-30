@@ -1,4 +1,4 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
 public abstract class CommandRun implements Command {
     Attribute attribute;

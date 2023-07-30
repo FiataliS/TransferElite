@@ -1,4 +1,4 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
 import com.fiatalis.utils.ConfigUtils;
 import com.fiatalis.utils.Utils;

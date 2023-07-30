@@ -1,7 +1,6 @@
-package com.fiatalis.command;
+package com.fiatalis.client.command;
 
-import com.fiatalis.Client;
-import com.fiatalis.entity.ConnectAddress;
+import com.fiatalis.client.Client;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
@@ -26,7 +25,7 @@ public class Connect extends CommandRun {
 
     private void connect() {
         Client client = Client.getInstance();
-        ConnectAddress connectAddress = ConnectAddress.getInstance();
+        com.fiatalis.entity.Connect connect = com.fiatalis.entity.Connect.getInstance();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String name = null, password = null;
         try {
@@ -36,15 +35,15 @@ public class Connect extends CommandRun {
             password = reader.readLine();
         } catch (IOException e) {
         }
-        if (connectAddress.getName().equals(null) || connectAddress.getPort().equals(null)) {
+        if (connect.getName().equals(null) || connect.getPort().equals(null)) {
             System.out.println("Нет адреса и порта для подключения!");
             return;
         }
         if (!client.isAuthorized()) {
-            client.connect(connectAddress);
+            client.connect(connect);
             client.authentication(name, password);
             return;
         }
-        System.out.println("Подключение прошло успешно: " + connectAddress.getName() + ":" + connectAddress.getPort());
+        System.out.println("Подключение прошло успешно: " + connect.getName() + ":" + connect.getPort());
     }
 }
