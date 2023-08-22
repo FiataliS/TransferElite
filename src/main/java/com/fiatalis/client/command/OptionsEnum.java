@@ -7,7 +7,8 @@ public enum OptionsEnum {
     CONNECT("CONNECT"),
     DIR("DIR"),
     SERVER("SERVER"),
-    USER("USER");
+    USER("USER"),
+    SHELL("SHELL");
 
     private final String options;
 

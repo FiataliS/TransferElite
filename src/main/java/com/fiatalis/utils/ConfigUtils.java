@@ -19,6 +19,7 @@ public class ConfigUtils {
             extractDirectory();
             extractConnect();
             extractServer();
+            extractShell();
         }
     }
 
@@ -80,6 +81,13 @@ public class ConfigUtils {
         }
     }
 
+    public void recordShell(){
+        if (getIsDir) {
+            ini.put("Interface", "shell", Skin.getInstance().getSkin());
+            updateIniFile();
+        }
+    }
+
     public void extractDirectory() {
         if (getIsDir) {
             String name = ini.get("Directory", "name");
@@ -118,6 +126,15 @@ public class ConfigUtils {
             if (address != null && port != null) {
                 Connect.getInstance().setName(address);
                 Connect.getInstance().setPort(port);
+            }
+        }
+    }
+
+    public void extractShell() {
+        if (getIsDir) {
+            Boolean shell = Boolean.valueOf(ini.get("Interface", "shell"));
+            if (shell != null) {
+                Skin.getInstance().setSkin(shell);
             }
         }
     }
