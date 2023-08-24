@@ -17,7 +17,11 @@ public class Windows extends JFrame {
     private final JList list = new JList(defaultListModel);
     private final JPanel menuUp = new JPanel(new GridLayout(1, 3));
     private final JPanel menuDown = new JPanel(new GridLayout(1, 2));
+    private final JPanel menuDownIndic = new JPanel(new GridLayout(1, 2));
+    private final JPanel panel = new JPanel(new GridLayout(2, 1));
     private final JTextField connectAddres = new JTextField();
+    private JLabel status = new JLabel("Not connect  ", SwingConstants.RIGHT);
+    private JLabel statusUpDown = new JLabel("", SwingConstants.LEFT);
     private final JTextField connectPort = new JTextField();
     private final JButton buttonConnect = new JButton("Connect");
     private final JButton buttonDownload = new JButton("Download");
@@ -45,9 +49,14 @@ public class Windows extends JFrame {
         menuUp.add(buttonConnect);
         menuDown.add(buttonDownload);
         menuDown.add(buttonUpload);
+        menuDownIndic.add(statusUpDown);
+        menuDownIndic.add(status);
+        panel.add(menuDown, BorderLayout.NORTH);
+        panel.add(menuDownIndic, BorderLayout.SOUTH);
         this.add(menuUp, BorderLayout.NORTH);
         this.add(list, BorderLayout.CENTER);
-        this.add(menuDown, BorderLayout.SOUTH);
+        this.add(panel, BorderLayout.SOUTH);
+
     }
 
     private void listeners() {
@@ -73,13 +82,14 @@ public class Windows extends JFrame {
                 for (int i = 0; i < files.length; i++) {
                     while (Client.getInstance().isTransfer()) ;
                     try {
+                        statusUpDown.setText("Uploading " + files[i].getName());
                         Client.getInstance().getOos().writeObject(new FileMessage(files[i].toPath()));
                         Client.getInstance().setTransfer(true);
-
                     } catch (IOException w) {
                     }
                 }
                 updateList();
+                statusUpDown.setText("Uploading complete");
             }
         });
         buttonDownload.addActionListener(new AbstractAction() {
@@ -88,11 +98,12 @@ public class Windows extends JFrame {
                 int[] selectedIndices = list.getSelectedIndices();
                 String[] files = new String[selectedIndices.length];
                 for (int i = 0; i < selectedIndices.length; i++) {
-                    files[i] =  String.valueOf(list.getModel().getElementAt(selectedIndices[i]));
+                    files[i] = String.valueOf(list.getModel().getElementAt(selectedIndices[i]));
                 }
                 for (int i = 0; i < files.length; i++) {
                     while (Client.getInstance().isTransfer()) ;
                     try {
+                        statusUpDown.setText("Downloading " + files[i]);
                         Client.getInstance().getOos().writeObject(new FileRequest(files[i], false));
                         Client.getInstance().setTransfer(true);
 
@@ -100,6 +111,7 @@ public class Windows extends JFrame {
                     }
                 }
                 updateList();
+                statusUpDown.setText("Downloading complete");
             }
         });
     }
@@ -108,6 +120,7 @@ public class Windows extends JFrame {
         try {
             Client.getInstance().updateServerViewPath();
             while (Client.getInstance().isTransfer()) ;
+            status.setText("Connecting to " + Connect.getInstance().getName() + ":" + Connect.getInstance().getPort() + "   ");
             defaultListModel.removeAllElements();
             defaultListModel.addAll(Client.getInstance().getServerView());
         } catch (NullPointerException e) {
