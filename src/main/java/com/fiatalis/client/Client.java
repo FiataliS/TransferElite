@@ -25,6 +25,7 @@ public class Client {
     private ObjectDecoderInputStream ois;
     private Server server = new Server();
     private boolean isAuthorized = false;
+    private boolean isTransfer = false;
     Socket socket;
 
     private static volatile Client instance;
@@ -81,6 +82,7 @@ public class Client {
                     case LIST:
                         ListMessage lm = (ListMessage) msg;
                         serverView = lm.getFiles();
+                        isTransfer = false;
                         break;
                     case AUTH_SERV:
                         AuthServ authServ = (AuthServ) msg;
@@ -97,6 +99,7 @@ public class Client {
 
     public void updateServerViewPath() {
         try {
+            isTransfer = true;
             oos.writeObject(new ListMessage(clientDir));
         } catch (IOException e) {
             System.out.println("Ошибка соединения");
