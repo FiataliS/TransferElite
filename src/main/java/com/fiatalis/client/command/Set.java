@@ -1,9 +1,7 @@
 package com.fiatalis.client.command;
 
+import com.fiatalis.entity.*;
 import com.fiatalis.entity.Connect;
-import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.Server;
-import com.fiatalis.entity.User;
 import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
@@ -43,7 +41,21 @@ public class Set extends CommandRun {
             case SERVER:
                 server();
                 break;
+            case SHELL:
+                shell();
+                break;
         }
+    }
+
+    private void shell() {
+        if (Skin.getInstance().getSkin()) {
+            Skin.getInstance().setSkin(false);
+            System.out.println("Интерфейс выключен");
+        } else {
+            Skin.getInstance().setSkin(true);
+            System.out.println("Интерфейс включен, перезагрузите приложения.");
+        }
+        new Save(new Attribute("save opt")).optionsHandler();
     }
 
     private void user() {
