@@ -1,4 +1,4 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.entity.*;
 import com.fiatalis.entity.Connect;
@@ -7,25 +7,20 @@ import com.fiatalis.utils.Utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ResourceBundle;
 
 public class Set extends CommandRun {
     public Set(Attribute attribute) {
         super(attribute);
     }
 
-    @Override
-    public void help() {
-        Utils.printConsole("Это команда создаст/изменит настройки введите опцию: \n " +
-                "set connect для изменения соединения  \n " +
-                "set dir для изменения директории  \n " +
-                "set user для изменения пользователя  \n " +
-                "set server для изменения настроек сервера");
-    }
+    ResourceBundle rb;
 
     @Override
     public void optionsHandler() {
+        rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
         if (attribute.getOptions() == null) {
-            System.out.println("Не введена опция обратитесь к помощи с помощью опции [-h]");
+            Utils.printConsole(rb.getString("failedOptions"), true);
             return;
         }
         switch (attribute.getOptions()) {
@@ -44,26 +39,36 @@ public class Set extends CommandRun {
             case SHELL:
                 shell();
                 break;
+            case LANG:
+                lang();
+        }
+        new Save(new Attribute("save opt")).optionsHandler();
+    }
+
+    private void lang() {
+        if (Language.getInstance().getLanguage().toUpperCase().equals("RU")) {
+            Language.getInstance().setLanguage("ENG");
+        } else {
+            Language.getInstance().setLanguage("RU");
         }
     }
 
     private void shell() {
         if (Skin.getInstance().getSkin()) {
             Skin.getInstance().setSkin(false);
-            System.out.println("Интерфейс выключен");
+            Utils.printConsole(rb.getString("shellOff"), true);
         } else {
             Skin.getInstance().setSkin(true);
-            System.out.println("Интерфейс включен, перезагрузите приложения.");
+            Utils.printConsole(rb.getString("shellOn"), true);
         }
-        new Save(new Attribute("save opt")).optionsHandler();
     }
 
     private void user() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            System.out.print("Введите имя пользователя: ");
+            Utils.printConsole(rb.getString("nameUser"), false);
             User.getInstance().setName(reader.readLine().trim());
-            System.out.print("Введите пороль: ");
+            Utils.printConsole(rb.getString("passwd"), false);
             User.getInstance().setPassword(reader.readLine().trim());
         } catch (IOException e) {
         }
@@ -72,9 +77,9 @@ public class Set extends CommandRun {
     private void server() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            System.out.print("Введите адресс сервера, по умолчанию будет localhost: ");
+            Utils.printConsole(rb.getString("addServer"), false);
             Server.getInstance().setName(reader.readLine());
-            System.out.print("Введите порт, по умолчанию будет 8797: ");
+            Utils.printConsole(rb.getString("addPort"), false);
             Server.getInstance().setPort(reader.readLine());
         } catch (IOException e) {
         }
@@ -84,7 +89,7 @@ public class Set extends CommandRun {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String name;
         try {
-            System.out.print("Введите директорию, для сохранения: ");
+            Utils.printConsole(rb.getString("editDir"), false);
             name = reader.readLine();
             if (name.length() < 1) {
                 name = null;
@@ -99,10 +104,10 @@ public class Set extends CommandRun {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String name = null, port = null;
         try {
-            System.out.print("Введите адресс сервера: ");
+            Utils.printConsole(rb.getString("addServer"), false);
             name = reader.readLine();
             if (name.length() < 1) name = null;
-            System.out.print("Введите порт: ");
+            Utils.printConsole(rb.getString("addPort"), false);
             port = reader.readLine();
             if (port.length() < 1) port = null;
         } catch (IOException e) {

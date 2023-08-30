@@ -20,6 +20,7 @@ public class ConfigUtils {
             extractConnect();
             extractServer();
             extractShell();
+            extractLanguage();
         }
     }
 
@@ -88,6 +89,14 @@ public class ConfigUtils {
         }
     }
 
+    public void recordLanguage(){
+        if (getIsDir) {
+            ini.put("Interface", "language", Language.getInstance().getLanguage());
+            updateIniFile();
+        }
+    }
+
+
     public void extractDirectory() {
         if (getIsDir) {
             String name = ini.get("Directory", "name");
@@ -126,6 +135,15 @@ public class ConfigUtils {
             if (address != null && port != null) {
                 Connect.getInstance().setName(address);
                 Connect.getInstance().setPort(port);
+            }
+        }
+    }
+
+    public void extractLanguage() {
+        if (getIsDir) {
+            String language = ini.get("Interface", "language");
+            if (language != null) {
+                Language.getInstance().setLanguage(language);
             }
         }
     }

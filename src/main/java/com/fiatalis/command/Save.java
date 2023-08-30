@@ -1,16 +1,10 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.utils.ConfigUtils;
-import com.fiatalis.utils.Utils;
 
 public class Save extends CommandRun {
     public Save(Attribute attribute) {
         super(attribute);
-    }
-
-    @Override
-    public void help() {
-        Utils.printConsole("Это команда сохранит настройки в директории программы.");
     }
 
     @Override
@@ -28,5 +22,6 @@ public class Save extends CommandRun {
         ConfigUtils.getInstance().recordConnect();
         ConfigUtils.getInstance().recordServer();
         ConfigUtils.getInstance().recordShell();
+        ConfigUtils.getInstance().recordLanguage();
     }
 }

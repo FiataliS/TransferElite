@@ -1,12 +1,14 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.client.Client;
+import com.fiatalis.entity.Language;
 import com.fiatalis.modelMessage.FileMessage;
 import com.fiatalis.modelMessage.FileRequest;
 import com.fiatalis.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class Put extends CommandRun {
     public Put(Attribute attribute) {
@@ -15,21 +17,17 @@ public class Put extends CommandRun {
 
     boolean isDelete = false;
 
-    @Override
-    public void help() {
-        Utils.printConsole("Загружает файл на сервер");
-    }
-
     private void put() {
+        ResourceBundle rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
         if (Client.getInstance().getClientDir().resolve(attribute.getAttribute()).toFile().isDirectory() && checkFile(attribute.getAttribute())) {
-            System.out.println("Пока папку передать не могу, но скоро возможность появится.");
+            Utils.printConsole(rb.getString("failedFolder"), true);
         } else if (checkFile(attribute.getAttribute())) {
             String item = attribute.getAttribute();
             File selected = Client.getInstance().getClientDir().resolve(item).toFile();
             try {
                 Client.getInstance().getOos().writeObject(new FileMessage(selected.toPath()));
             } catch (IOException e) {
-                System.out.println("Не удалось отправить файл: " + item);
+                Utils.printConsole(rb.getString("failedPut") + " " + item, true);
             }
             deleteFile(selected, item);
             Client.getInstance().updateServerViewPath();
@@ -41,10 +39,10 @@ public class Put extends CommandRun {
             try {
                 Client.getInstance().getOos().writeObject(new FileRequest(attribute.getAttribute(), isDelete));
             } catch (IOException e) {
-                System.out.println("Не удалось скачать файл, ошибка.");
+                Utils.printConsole(rb.getString("failedUpload"), true);
             }
         } else {
-            System.out.println("Имя файла введено не корректно!");
+            Utils.printConsole(rb.getString("failedName"), true);
         }
     }
 
@@ -64,9 +62,10 @@ public class Put extends CommandRun {
     }
 
     private void deleteFile(File file, String name) {
+        ResourceBundle rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
         if (isDelete) {
             if (file.delete()) {
-                System.out.println("File: " + name + " delete");
+                Utils.printConsole(rb.getString("file") + ": " + name + " " + rb.getString("delete"), true);
             }
         }
     }

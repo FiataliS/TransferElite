@@ -1,6 +1,8 @@
 package com.fiatalis.server;
 
+import com.fiatalis.entity.Language;
 import com.fiatalis.entity.Server;
+import com.fiatalis.entity.Skin;
 import com.fiatalis.server.handler.CloudMessageHandler;
 import com.fiatalis.utils.Utils;
 import io.netty.bootstrap.ServerBootstrap;
@@ -12,6 +14,7 @@ import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class EchoServer {
@@ -20,10 +23,13 @@ public class EchoServer {
     private ConcurrentLinkedDeque<ChannelHandlerContext> users;
     private ChannelFuture channelFuture;
     private Thread thread;
+    private boolean skin = Skin.getInstance().getSkin();
+    private ResourceBundle rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
 
     private static volatile EchoServer instance;
 
     public static EchoServer getInstance() {
+
         EchoServer localInstance = instance;
         if (localInstance == null) {
             synchronized (EchoServer.class) {
@@ -48,7 +54,9 @@ public class EchoServer {
         if (!thread.isAlive()) {
             thread.start();
         } else {
-            System.out.println("Already working");
+            if (!skin) {
+                Utils.printConsole(rb.getString("serverWorker") , true);
+            }
         }
     }
 
@@ -57,7 +65,9 @@ public class EchoServer {
             thread.interrupt();
             instance = new EchoServer();
         } else {
-            System.out.println("Please enter start");
+            if (!skin) {
+                Utils.printConsole(rb.getString("writeStart") , true);
+            }
         }
     }
 
@@ -78,14 +88,18 @@ public class EchoServer {
                         }
                     });
             channelFuture = bootstrap.bind(Integer.parseInt(Server.getInstance().getPort())).sync();
-            System.out.println("Server started...");
+            if (!skin) {
+                Utils.printConsole(rb.getString("serverStarted") , true);
+            }
             Utils.addPrefix();
             channelFuture.channel().closeFuture().sync(); // block
         } catch (InterruptedException e) {
         } finally {
             auth.shutdownGracefully();
             worker.shutdownGracefully();
-            System.out.println("Server stopped...");
+            if (!skin) {
+                Utils.printConsole(rb.getString("serverStopped") , true);
+            }
             channelFuture.channel().disconnect();
         }
     }

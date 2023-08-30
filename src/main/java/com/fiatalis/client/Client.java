@@ -1,9 +1,8 @@
 package com.fiatalis.client;
 
-import com.fiatalis.entity.Connect;
-import com.fiatalis.entity.Directory;
-import com.fiatalis.entity.Server;
+import com.fiatalis.entity.*;
 import com.fiatalis.modelMessage.*;
+import com.fiatalis.utils.Utils;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import lombok.Data;
@@ -15,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Data
 public class Client {
@@ -27,6 +27,8 @@ public class Client {
     private boolean isAuthorized = false;
     private boolean isTransfer = false;
     Socket socket;
+    private boolean skin = Skin.getInstance().getSkin();
+    private ResourceBundle rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
 
     private static volatile Client instance;
 
@@ -57,7 +59,9 @@ public class Client {
                 socket.close();
             }
         } catch (IOException ioException) {
-            System.out.println("Сервер отсутствует");
+            if (!skin) {
+                Utils.printConsole(rb.getString("serverNotFound"), true);
+            }
         }
     }
 
@@ -65,7 +69,9 @@ public class Client {
         try {
             socket.close();
         } catch (IOException e) {
-            System.out.println("Соединение разорвано");
+            if (!skin) {
+                Utils.printConsole(rb.getString("serverDropped"), true);
+            }
         }
     }
 
@@ -77,7 +83,9 @@ public class Client {
                     case FILE:
                         FileMessage fm = (FileMessage) msg;
                         Files.write(clientDir.resolve(fm.getName()), fm.getBytes());
-                        System.out.println("Загружен файл: " + fm.getName());
+                        if (!skin) {
+                            Utils.printConsole(rb.getString("DownloadComplete") + " " + fm.getName(), true);
+                        }
                         break;
                     case LIST:
                         ListMessage lm = (ListMessage) msg;
@@ -88,12 +96,16 @@ public class Client {
                         AuthServ authServ = (AuthServ) msg;
                         isAuthorized = authServ.isAuth();
                         if (!authServ.isAuth()) {
-                            System.out.println("Неверный логин и/или пороль");
+                            if (!skin) {
+                                Utils.printConsole(rb.getString("filedAuth"), true);
+                            }
                         }
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ошибка чтения ответа сервера.");
+            if (!skin) {
+                Utils.printConsole(rb.getString("failedRead"), true);
+            }
         }
     }
 
@@ -102,7 +114,9 @@ public class Client {
             isTransfer = true;
             oos.writeObject(new ListMessage(clientDir));
         } catch (IOException e) {
-            System.out.println("Ошибка соединения");
+            if (!skin) {
+                Utils.printConsole(rb.getString("errorConnect"), true);
+            }
         }
     }
 
@@ -126,12 +140,12 @@ public class Client {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Пустые строки" + "Заполни логин и/или пороль");
-                System.out.println("Введите команду set user");
+                if (!skin) {
+                    Utils.printConsole(rb.getString("errorLoginOrPasswd"), true);
+                }
             }
         } else {
             isAuthorized = false;
         }
     }
-
 }
