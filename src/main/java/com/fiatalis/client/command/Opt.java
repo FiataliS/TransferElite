@@ -11,11 +11,6 @@ public class Opt extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Это команда показывает настройки программы");
-    }
-
-    @Override
     public void optionsHandler() {
         opt();
     }

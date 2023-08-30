@@ -10,11 +10,6 @@ public class Ls extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Показывает список файлов на сервере");
-    }
-
-    @Override
     public void optionsHandler() {
         ls();
     }

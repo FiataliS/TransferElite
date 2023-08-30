@@ -15,11 +15,6 @@ public class Put extends CommandRun {
 
     boolean isDelete = false;
 
-    @Override
-    public void help() {
-        Utils.printConsole("Загружает файл на сервер");
-    }
-
     private void put() {
         if (Client.getInstance().getClientDir().resolve(attribute.getAttribute()).toFile().isDirectory() && checkFile(attribute.getAttribute())) {
             System.out.println("Пока папку передать не могу, но скоро возможность появится.");

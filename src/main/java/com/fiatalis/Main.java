@@ -49,7 +49,7 @@ public class Main {
         Directory.getInstance();
         Server.getInstance();
         Connect.getInstance();
-
+        Language.getInstance();
         Client.getInstance();
         EchoServer.getInstance();
     }

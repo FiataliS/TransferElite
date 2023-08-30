@@ -14,15 +14,6 @@ public class Set extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Это команда создаст/изменит настройки введите опцию: \n " +
-                "set connect для изменения соединения  \n " +
-                "set dir для изменения директории  \n " +
-                "set user для изменения пользователя  \n " +
-                "set server для изменения настроек сервера");
-    }
-
-    @Override
     public void optionsHandler() {
         if (attribute.getOptions() == null) {
             System.out.println("Не введена опция обратитесь к помощи с помощью опции [-h]");
@@ -44,6 +35,16 @@ public class Set extends CommandRun {
             case SHELL:
                 shell();
                 break;
+            case LANG:
+                lang();
+        }
+    }
+
+    private void lang() {
+        if (Language.getInstance().getLanguage().toUpperCase().equals("RU")) {
+            Language.getInstance().setLanguage("ENG");
+        } else {
+            Language.getInstance().setLanguage("RU");
         }
     }
 

@@ -14,11 +14,6 @@ public class Connect extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Это соединяется с сервером");
-    }
-
-    @Override
     public void optionsHandler() {
         connect();
     }

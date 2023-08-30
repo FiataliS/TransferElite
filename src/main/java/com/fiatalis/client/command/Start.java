@@ -11,11 +11,6 @@ public class Start extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Команда Start запускает сервер");
-    }
-
-    @Override
     public void optionsHandler() {
         start();
     }

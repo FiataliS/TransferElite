@@ -9,11 +9,6 @@ public class Save extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Это команда сохранит настройки в директории программы.");
-    }
-
-    @Override
     public void optionsHandler() {
         if (attribute.getOptions() == OptionsEnum.OPT) {
             saveOpt();
@@ -28,5 +23,6 @@ public class Save extends CommandRun {
         ConfigUtils.getInstance().recordConnect();
         ConfigUtils.getInstance().recordServer();
         ConfigUtils.getInstance().recordShell();
+        ConfigUtils.getInstance().recordLanguage();
     }
 }

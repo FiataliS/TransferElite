@@ -8,7 +8,8 @@ public enum OptionsEnum {
     DIR("DIR"),
     SERVER("SERVER"),
     USER("USER"),
-    SHELL("SHELL");
+    SHELL("SHELL"),
+    LANG("LANG");
 
     private final String options;
 

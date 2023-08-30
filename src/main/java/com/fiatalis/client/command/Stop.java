@@ -12,11 +12,6 @@ public class Stop extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Команда Stop выкдючает сервер");
-    }
-
-    @Override
     public void optionsHandler() {
         stop();
     }

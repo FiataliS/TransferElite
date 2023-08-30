@@ -14,11 +14,6 @@ public class Get extends CommandRun {
     }
 
     @Override
-    public void help() {
-        Utils.printConsole("Загружает файл с сервера");
-    }
-
-    @Override
     public void optionsHandler() {
         if (attribute.getOptions() == OptionsEnum.DELETE) {
             isDelete = true;
