@@ -140,13 +140,12 @@ public class Client {
                     e.printStackTrace();
                 }
             } else {
-
-                System.out.println("Пустые строки" + "Заполни логин и/или пороль");
-                System.out.println("Введите команду set user");
+                if (!skin) {
+                    Utils.printConsole(rb.getString("errorLoginOrPasswd"), true);
+                }
             }
         } else {
             isAuthorized = false;
         }
     }
-
 }

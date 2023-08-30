@@ -2,7 +2,6 @@ package com.fiatalis.client;
 
 import com.fiatalis.command.*;
 import com.fiatalis.entity.Language;
-import com.fiatalis.entity.Skin;
 import com.fiatalis.utils.Utils;
 
 import java.util.ResourceBundle;
