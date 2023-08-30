@@ -14,7 +14,7 @@ public abstract class CommandRun implements Command {
     }
 
     public void help() {
-        ResourceBundle rb = ResourceBundle.getBundle("messages", new Locale(Language.getInstance().getLanguage()));
+        ResourceBundle rb = ResourceBundle.getBundle("consoleHelp", new Locale(Language.getInstance().getLanguage()));
         Utils.printConsole(attribute.getCommand().toString() + ": " + rb.getString(attribute.getCommand().toString()));
     }
 

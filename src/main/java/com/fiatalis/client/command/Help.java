@@ -13,7 +13,7 @@ public class Help extends CommandRun {
 
     @Override
     public void help() {
-        ResourceBundle rb = ResourceBundle.getBundle("messages", new Locale(Language.getInstance().getLanguage()));
+        ResourceBundle rb = ResourceBundle.getBundle("consoleHelp", new Locale(Language.getInstance().getLanguage()));
         for (String s : rb.keySet()) {
             Utils.printConsole(s + ": " + rb.getString(s));
         }
