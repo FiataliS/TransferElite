@@ -2,6 +2,8 @@ package com.fiatalis.entity;
 
 import lombok.Data;
 
+import java.util.Locale;
+
 @Data
 public class Language {
     String language;
@@ -22,6 +24,10 @@ public class Language {
             }
         }
         return localInstance;
+    }
+
+    public Locale getLocate(){
+        return new Locale(getLanguage());
     }
 
     @Override

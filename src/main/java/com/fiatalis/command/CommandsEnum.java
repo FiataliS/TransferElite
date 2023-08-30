@@ -1,4 +1,4 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 public enum CommandsEnum {
     NOT_FOUND,

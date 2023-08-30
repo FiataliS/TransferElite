@@ -1,4 +1,4 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.entity.*;
 import com.fiatalis.entity.Connect;
@@ -16,6 +16,6 @@ public class Opt extends CommandRun {
     }
 
     private void opt() {
-        Utils.printConsole(User.getInstance() + "\n" + Connect.getInstance() + "\n" + Server.getInstance() + "\n" + Directory.getInstance() + "\n" + Skin.getInstance());
+        Utils.printConsole(User.getInstance() + "\n" + Connect.getInstance() + "\n" + Server.getInstance() + "\n" + Directory.getInstance() + "\n" + Skin.getInstance(), true);
     }
 }

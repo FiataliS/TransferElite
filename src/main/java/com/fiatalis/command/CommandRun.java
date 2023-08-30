@@ -1,9 +1,8 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.entity.Language;
 import com.fiatalis.utils.Utils;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public abstract class CommandRun implements Command {
@@ -14,8 +13,8 @@ public abstract class CommandRun implements Command {
     }
 
     public void help() {
-        ResourceBundle rb = ResourceBundle.getBundle("consoleHelp", new Locale(Language.getInstance().getLanguage()));
-        Utils.printConsole(attribute.getCommand().toString() + ": " + rb.getString(attribute.getCommand().toString()));
+        ResourceBundle rb = ResourceBundle.getBundle("consoleHelp", Language.getInstance().getLocate());
+        Utils.printConsole(attribute.getCommand().toString() + ": " + rb.getString(attribute.getCommand().toString()), true);
     }
 
     @Override

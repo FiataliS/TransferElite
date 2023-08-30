@@ -1,6 +1,11 @@
 package com.fiatalis.client;
 
-import com.fiatalis.client.command.*;
+import com.fiatalis.command.*;
+import com.fiatalis.entity.Language;
+import com.fiatalis.entity.Skin;
+import com.fiatalis.utils.Utils;
+
+import java.util.ResourceBundle;
 
 public class CommandHandler {
     private Command command = null;
@@ -11,6 +16,7 @@ public class CommandHandler {
     }
 
     public void commandDefinition() {
+        ResourceBundle rb = ResourceBundle.getBundle("consoleMsg", Language.getInstance().getLocate());
         switch (attribute.getCommand()) {
             case LS:
                 command = new Ls(attribute);
@@ -48,7 +54,7 @@ public class CommandHandler {
             case SPACE:
                 break;
             default:
-                System.out.println("Команда не наедена");
+                Utils.printConsole(rb.getString("commandNotFound"), true);
         }
         if (command != null) {
             command.handler();

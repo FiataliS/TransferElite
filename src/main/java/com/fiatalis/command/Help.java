@@ -1,4 +1,4 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.entity.Language;
 import com.fiatalis.utils.Utils;
@@ -15,12 +15,8 @@ public class Help extends CommandRun {
     public void help() {
         ResourceBundle rb = ResourceBundle.getBundle("consoleHelp", new Locale(Language.getInstance().getLanguage()));
         for (String s : rb.keySet()) {
-            Utils.printConsole(s + ": " + rb.getString(s));
+            Utils.printConsole(s + ": " + rb.getString(s), true);
         }
-    }
-
-    private void helpRun() {
-        System.out.println("команда не доработана");
     }
 
     @Override

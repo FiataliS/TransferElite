@@ -1,7 +1,6 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.utils.ConfigUtils;
-import com.fiatalis.utils.Utils;
 
 public class Save extends CommandRun {
     public Save(Attribute attribute) {

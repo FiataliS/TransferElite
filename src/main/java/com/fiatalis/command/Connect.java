@@ -1,7 +1,6 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.client.Client;
-import com.fiatalis.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

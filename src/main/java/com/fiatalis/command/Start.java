@@ -1,7 +1,6 @@
-package com.fiatalis.client.command;
+package com.fiatalis.command;
 
 import com.fiatalis.server.EchoServer;
-import com.fiatalis.utils.Utils;
 
 
 public class Start extends CommandRun {

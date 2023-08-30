@@ -20,6 +20,7 @@ public class ConfigUtils {
             extractConnect();
             extractServer();
             extractShell();
+            extractLanguage();
         }
     }
 
