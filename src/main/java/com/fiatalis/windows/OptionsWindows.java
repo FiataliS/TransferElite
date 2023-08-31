@@ -1,13 +1,11 @@
 package com.fiatalis.windows;
 
 import com.fiatalis.command.Attribute;
-import com.fiatalis.command.Command;
 import com.fiatalis.command.Save;
 import com.fiatalis.entity.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
