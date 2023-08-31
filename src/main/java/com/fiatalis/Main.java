@@ -1,7 +1,7 @@
 package com.fiatalis;
 
 import com.fiatalis.client.Client;
-import com.fiatalis.client.CommandHandler;
+import com.fiatalis.command.CommandHandler;
 import com.fiatalis.entity.*;
 import com.fiatalis.entity.Skin;
 import com.fiatalis.server.EchoServer;

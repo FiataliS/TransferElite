@@ -31,7 +31,6 @@ public class MainWindows extends JFrame {
     private final JButton buttonDownload;
     private final JButton buttonUpload;
     private final JFileChooser fileChooser = new JFileChooser();
-    private final JComboBox comboBox;
     private final JMenuBar menuBar;
     private final JMenu optionsMenu;
     private ResourceBundle rb;
@@ -42,7 +41,6 @@ public class MainWindows extends JFrame {
         buttonConnect = new JButton(rb.getString("buttonConnect"));
         buttonDownload = new JButton(rb.getString("buttonDownload"));
         buttonUpload = new JButton(rb.getString("buttonUpload"));
-        comboBox = new JComboBox(new String[]{"RU", "ENG"});
         connectAddress.setText(Connect.getInstance().getName());
         connectPort.setText(Connect.getInstance().getPort());
         menuBar = new JMenuBar();
@@ -59,14 +57,13 @@ public class MainWindows extends JFrame {
     private void iniMenu() {
         Font font = new Font("Verdana", Font.PLAIN, 12);
         optionsMenu.setFont(font);
-
         menuBar.add(optionsMenu);
     }
 
     public MainWindows() {
         addComponent();
         listeners();
-        //addMouseListener();
+        language();
     }
 
     private void addComponent() {
@@ -79,11 +76,9 @@ public class MainWindows extends JFrame {
         menuDown.add(buttonUpload);
         menuDownIndic.add(statusUpDown);
         menuDownIndic.add(status);
-        menuDownIndic.add(comboBox);
         panel.add(menuDown, BorderLayout.NORTH);
         panel.add(menuDownIndic, BorderLayout.SOUTH);
         this.add(menuBar, BorderLayout.NORTH);
-        //this.add(menuUp, BorderLayout.NORTH);
         this.add(list, BorderLayout.CENTER);
         this.add(panel, BorderLayout.SOUTH);
     }
@@ -143,14 +138,6 @@ public class MainWindows extends JFrame {
                 statusUpDown.setText(rb.getString("downloading") + " " + rb.getString("complete"));
             }
         });
-        comboBox.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Language.getInstance().setLanguage(comboBox.getSelectedItem().toString());
-                rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
-                language();
-            }
-        });
         optionsMenu.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
@@ -170,12 +157,12 @@ public class MainWindows extends JFrame {
         });
     }
 
-    private void language() {
+    public void language() {
+        rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
         status.setText(rb.getString("notConnect") + "  ");
         buttonConnect.setText(rb.getString("buttonConnect"));
         buttonDownload.setText(rb.getString("buttonDownload"));
         buttonUpload.setText(rb.getString("buttonUpload"));
-
     }
 
 
