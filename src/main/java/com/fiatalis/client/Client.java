@@ -8,7 +8,9 @@ import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import lombok.Data;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,6 +49,11 @@ public class Client {
     }
 
     public void connect(Connect connect) {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(Connect.getInstance().getName());
+            if (!inetAddress.isReachable(1000)) return;
+        } catch (IOException e) {
+        }
         try {
             socket = new Socket(Connect.getInstance().getName(), Integer.parseInt(Connect.getInstance().getPort()));
             Thread readThread = new Thread(this::read);
@@ -136,8 +143,8 @@ public class Client {
             if (name.length() > 0) {
                 try {
                     oos.writeObject(new AuthServ(name, pass, isAuthorized));
+                } catch (NullPointerException e) {
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             } else {
                 if (!skin) {

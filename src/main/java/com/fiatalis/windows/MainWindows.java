@@ -75,9 +75,11 @@ public class MainWindows extends JFrame {
         menuDown.add(buttonDownload);
         menuDown.add(buttonUpload);
         menuDownIndic.add(statusUpDown);
-        menuDownIndic.add(status);
         panel.add(menuDown, BorderLayout.NORTH);
         panel.add(menuDownIndic, BorderLayout.SOUTH);
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(status);
+        menuBar.add(buttonConnect);
         this.add(menuBar, BorderLayout.NORTH);
         this.add(list, BorderLayout.CENTER);
         this.add(panel, BorderLayout.SOUTH);
