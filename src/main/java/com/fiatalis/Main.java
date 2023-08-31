@@ -26,9 +26,8 @@ public class Main {
     }
 
     private static void window(){
-        Controller games = new Controller();
         JFrame.setDefaultLookAndFeelDecorated(true);
-        javax.swing.SwingUtilities.invokeLater(() -> games.start());
+        javax.swing.SwingUtilities.invokeLater(() -> Controller.getInstance().startWindows());
     }
 
 

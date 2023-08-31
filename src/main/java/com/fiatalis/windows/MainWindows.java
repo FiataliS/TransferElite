@@ -7,13 +7,15 @@ import com.fiatalis.modelMessage.FileMessage;
 import com.fiatalis.modelMessage.FileRequest;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class Windows extends JFrame {
+public class MainWindows extends JFrame {
 
     private DefaultListModel defaultListModel = new DefaultListModel<>();
     private final JList list = new JList(defaultListModel);
@@ -29,28 +31,41 @@ public class Windows extends JFrame {
     private final JButton buttonDownload;
     private final JButton buttonUpload;
     private final JFileChooser fileChooser = new JFileChooser();
-    private final JComboBox comboBox = new JComboBox(new String[]{"RU", "ENG"});
+    private final JComboBox comboBox;
+    private final JMenuBar menuBar;
+    private final JMenu optionsMenu;
     private ResourceBundle rb;
 
     {
         rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
         status = new JLabel(rb.getString("notConnect") + "  ", SwingConstants.RIGHT);
-        buttonConnect = new JButton("Connect");
-        buttonDownload = new JButton("Download");
-        buttonUpload = new JButton("Upload");
+        buttonConnect = new JButton(rb.getString("buttonConnect"));
+        buttonDownload = new JButton(rb.getString("buttonDownload"));
+        buttonUpload = new JButton(rb.getString("buttonUpload"));
+        comboBox = new JComboBox(new String[]{"RU", "ENG"});
+        connectAddress.setText(Connect.getInstance().getName());
+        connectPort.setText(Connect.getInstance().getPort());
+        menuBar = new JMenuBar();
+        optionsMenu = new JMenu("Опции");
+        iniMenu();
         this.setTitle("Transfer Elite");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(400, 500));
         this.setLocationRelativeTo(null);
         this.setResizable(true);
-        connectAddress.setText(Connect.getInstance().getName());
-        connectPort.setText(Connect.getInstance().getPort());
+
     }
 
-    public Windows() {
+    private void iniMenu() {
+        Font font = new Font("Verdana", Font.PLAIN, 12);
+        optionsMenu.setFont(font);
+
+        menuBar.add(optionsMenu);
+    }
+
+    public MainWindows() {
         addComponent();
         listeners();
-        language();
         //addMouseListener();
     }
 
@@ -67,7 +82,8 @@ public class Windows extends JFrame {
         menuDownIndic.add(comboBox);
         panel.add(menuDown, BorderLayout.NORTH);
         panel.add(menuDownIndic, BorderLayout.SOUTH);
-        this.add(menuUp, BorderLayout.NORTH);
+        this.add(menuBar, BorderLayout.NORTH);
+        //this.add(menuUp, BorderLayout.NORTH);
         this.add(list, BorderLayout.CENTER);
         this.add(panel, BorderLayout.SOUTH);
     }
@@ -135,6 +151,23 @@ public class Windows extends JFrame {
                 language();
             }
         });
+        optionsMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                Controller.getInstance().getWindows().setVisible(false);
+                Controller.getInstance().startOptions();
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
     }
 
     private void language() {
@@ -156,9 +189,5 @@ public class Windows extends JFrame {
         } catch (NullPointerException e) {
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-    }
-
-    public JFrame getFrame() {
-        return this;
     }
 }
