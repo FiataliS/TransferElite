@@ -5,6 +5,7 @@ import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Language;
 import com.fiatalis.modelMessage.FileMessage;
 import com.fiatalis.modelMessage.FileRequest;
+import com.fiatalis.server.EchoServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class Windows extends JFrame {
+public class MainWindows extends JFrame {
 
     private DefaultListModel defaultListModel = new DefaultListModel<>();
     private final JList list = new JList(defaultListModel);
@@ -29,29 +30,50 @@ public class Windows extends JFrame {
     private final JButton buttonDownload;
     private final JButton buttonUpload;
     private final JFileChooser fileChooser = new JFileChooser();
-    private final JComboBox comboBox = new JComboBox(new String[]{"RU", "ENG"});
+    private final JMenuBar menuBar;
+    private final JMenu menu;
+    private final JMenuItem optionsMenu;
+    private final JCheckBox serverCheck;
     private ResourceBundle rb;
 
     {
         rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
         status = new JLabel(rb.getString("notConnect") + "  ", SwingConstants.RIGHT);
-        buttonConnect = new JButton("Connect");
-        buttonDownload = new JButton("Download");
-        buttonUpload = new JButton("Upload");
+        buttonConnect = new JButton(rb.getString("buttonConnect"));
+        buttonDownload = new JButton(rb.getString("buttonDownload"));
+        buttonUpload = new JButton(rb.getString("buttonUpload"));
+        connectAddress.setText(Connect.getInstance().getName());
+        connectPort.setText(Connect.getInstance().getPort());
+        serverCheck = new JCheckBox("server start");
+        menu = new JMenu("Menu");
+        menuBar = new JMenuBar();
+        optionsMenu = new JMenuItem("Опции");
+        iniMenu();
         this.setTitle("Transfer Elite");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(400, 500));
         this.setLocationRelativeTo(null);
         this.setResizable(true);
-        connectAddress.setText(Connect.getInstance().getName());
-        connectPort.setText(Connect.getInstance().getPort());
+
     }
 
-    public Windows() {
+    private void iniMenu() {
+        Font font = new Font("Verdana", Font.PLAIN, 12);
+        optionsMenu.setFont(font);
+        menu.add(optionsMenu);
+        menu.add(serverCheck);
+        menuBar.add(menu);
+    }
+
+    private void initConsole() {
+        Font font = new Font("Verdana", Font.PLAIN, 12);
+
+    }
+
+    public MainWindows() {
         addComponent();
         listeners();
         language();
-        //addMouseListener();
     }
 
     private void addComponent() {
@@ -62,12 +84,14 @@ public class Windows extends JFrame {
         menuUp.add(buttonConnect);
         menuDown.add(buttonDownload);
         menuDown.add(buttonUpload);
+
         menuDownIndic.add(statusUpDown);
-        menuDownIndic.add(status);
-        menuDownIndic.add(comboBox);
         panel.add(menuDown, BorderLayout.NORTH);
         panel.add(menuDownIndic, BorderLayout.SOUTH);
-        this.add(menuUp, BorderLayout.NORTH);
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(status);
+        menuBar.add(buttonConnect);
+        this.add(menuBar, BorderLayout.NORTH);
         this.add(list, BorderLayout.CENTER);
         this.add(panel, BorderLayout.SOUTH);
     }
@@ -92,6 +116,7 @@ public class Windows extends JFrame {
                 fileChooser.setMultiSelectionEnabled(true);
                 fileChooser.showOpenDialog(new JFileChooser());
                 File[] files = fileChooser.getSelectedFiles();
+                if (fileChooser.getName() == null) return;
                 for (int i = 0; i < files.length; i++) {
                     while (Client.getInstance().isTransfer()) ;
                     try {
@@ -110,6 +135,7 @@ public class Windows extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedIndices = list.getSelectedIndices();
                 String[] files = new String[selectedIndices.length];
+                if (list.isSelectionEmpty()) return;
                 for (int i = 0; i < selectedIndices.length; i++) {
                     files[i] = String.valueOf(list.getModel().getElementAt(selectedIndices[i]));
                 }
@@ -127,22 +153,31 @@ public class Windows extends JFrame {
                 statusUpDown.setText(rb.getString("downloading") + " " + rb.getString("complete"));
             }
         });
-        comboBox.addActionListener(new AbstractAction() {
+        optionsMenu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Language.getInstance().setLanguage(comboBox.getSelectedItem().toString());
-                rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
-                language();
+                Controller.getInstance().getWindows().setVisible(false);
+                Controller.getInstance().startOptions();
+            }
+        });
+        serverCheck.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (serverCheck.isSelected()) {
+                    EchoServer.getInstance().startServer();
+                } else {
+                    EchoServer.getInstance().stopServer();
+                }
             }
         });
     }
 
-    private void language() {
+    public void language() {
+        rb = ResourceBundle.getBundle("interface", Language.getInstance().getLocate());
         status.setText(rb.getString("notConnect") + "  ");
         buttonConnect.setText(rb.getString("buttonConnect"));
         buttonDownload.setText(rb.getString("buttonDownload"));
         buttonUpload.setText(rb.getString("buttonUpload"));
-
     }
 
 
@@ -156,9 +191,5 @@ public class Windows extends JFrame {
         } catch (NullPointerException e) {
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-    }
-
-    public JFrame getFrame() {
-        return this;
     }
 }

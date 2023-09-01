@@ -1,7 +1,7 @@
 package com.fiatalis;
 
 import com.fiatalis.client.Client;
-import com.fiatalis.client.CommandHandler;
+import com.fiatalis.command.CommandHandler;
 import com.fiatalis.entity.*;
 import com.fiatalis.entity.Skin;
 import com.fiatalis.server.EchoServer;
@@ -26,9 +26,8 @@ public class Main {
     }
 
     private static void window(){
-        Controller games = new Controller();
         JFrame.setDefaultLookAndFeelDecorated(true);
-        javax.swing.SwingUtilities.invokeLater(() -> games.start());
+        javax.swing.SwingUtilities.invokeLater(() -> Controller.getInstance().startWindows());
     }
 
 

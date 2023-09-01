@@ -1,6 +1,5 @@
-package com.fiatalis.client;
+package com.fiatalis.command;
 
-import com.fiatalis.command.*;
 import com.fiatalis.entity.Language;
 import com.fiatalis.utils.Utils;
 
