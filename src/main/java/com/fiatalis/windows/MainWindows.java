@@ -65,6 +65,11 @@ public class MainWindows extends JFrame {
         menuBar.add(menu);
     }
 
+    private void initConsole() {
+        Font font = new Font("Verdana", Font.PLAIN, 12);
+
+    }
+
     public MainWindows() {
         addComponent();
         listeners();
@@ -79,6 +84,7 @@ public class MainWindows extends JFrame {
         menuUp.add(buttonConnect);
         menuDown.add(buttonDownload);
         menuDown.add(buttonUpload);
+
         menuDownIndic.add(statusUpDown);
         panel.add(menuDown, BorderLayout.NORTH);
         panel.add(menuDownIndic, BorderLayout.SOUTH);
@@ -110,6 +116,7 @@ public class MainWindows extends JFrame {
                 fileChooser.setMultiSelectionEnabled(true);
                 fileChooser.showOpenDialog(new JFileChooser());
                 File[] files = fileChooser.getSelectedFiles();
+                if (fileChooser.getName() == null) return;
                 for (int i = 0; i < files.length; i++) {
                     while (Client.getInstance().isTransfer()) ;
                     try {
@@ -128,6 +135,7 @@ public class MainWindows extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedIndices = list.getSelectedIndices();
                 String[] files = new String[selectedIndices.length];
+                if (list.isSelectionEmpty()) return;
                 for (int i = 0; i < selectedIndices.length; i++) {
                     files[i] = String.valueOf(list.getModel().getElementAt(selectedIndices[i]));
                 }

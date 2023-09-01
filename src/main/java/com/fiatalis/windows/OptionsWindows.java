@@ -12,10 +12,10 @@ import java.util.ResourceBundle;
 
 public class OptionsWindows extends JFrame {
     private final JPanel allPanel = new JPanel(new GridLayout(10, 1));
-    private final JPanel p1 = new JPanel(new GridLayout(1, 4));
-    private final JPanel p2 = new JPanel(new GridLayout(1, 4));
-    private final JPanel p3 = new JPanel(new GridLayout(1, 4));
-    private final JPanel p4 = new JPanel(new GridLayout(1, 4));
+    private final JPanel p1 = new JPanel(new GridLayout(1, 5));
+    private final JPanel p2 = new JPanel(new GridLayout(1, 5));
+    private final JPanel p3 = new JPanel(new GridLayout(1, 5));
+    private final JPanel p4 = new JPanel(new GridLayout(1, 5));
     private final JPanel panelButton = new JPanel(new GridLayout(1, 2));
     private final JTextField connectAddress = new JTextField();
     private final JTextField connectPort = new JTextField();
@@ -68,29 +68,33 @@ public class OptionsWindows extends JFrame {
 
     private void addComponent() {
         allPanel.add(user);
-        p1.add(new JLabel("                   Name"));
+        p1.add(new JLabel("Name"));
         p1.add(userName);
-        p1.add(new JLabel("                    pass"));
+        p1.add(Box.createHorizontalGlue());
+        p1.add(new JLabel("pass"));
         p1.add(userPass);
         allPanel.add(p1);
         allPanel.add(connect);
-        p2.add(new JLabel("                   IP"));
+        p2.add(new JLabel("IP"));
         p2.add(connectAddress);
-        p2.add(new JLabel("                    port"));
+        p2.add(Box.createHorizontalGlue());
+        p2.add(new JLabel("port"));
         p2.add(connectPort);
         allPanel.add(p2);
         allPanel.add(server);
-        p3.add(new JLabel("                   IP"));
+        p3.add(new JLabel("IP"));
         p3.add(serverAddress);
-        p3.add(new JLabel("                    port"));
+        p3.add(Box.createHorizontalGlue());
+        p3.add(new JLabel("port"));
         p3.add(serverPort);
         allPanel.add(p3);
         allPanel.add(directory);
         allPanel.add(directoryAddress);
         allPanel.add(shell);
-        p4.add(new JLabel("         On/Off shell"));
+        p4.add(new JLabel("On/Off shell"));
         p4.add(intShell);
-        p4.add(new JLabel("            Language"));
+        p4.add(Box.createHorizontalGlue());
+        p4.add(new JLabel("Language"));
         p4.add(intLang);
         allPanel.add(p4);
         panelButton.add(cancel, BorderLayout.WEST);
