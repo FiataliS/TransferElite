@@ -5,10 +5,9 @@ import com.fiatalis.entity.Connect;
 import com.fiatalis.entity.Language;
 import com.fiatalis.modelMessage.FileMessage;
 import com.fiatalis.modelMessage.FileRequest;
+import com.fiatalis.server.EchoServer;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -32,7 +31,9 @@ public class MainWindows extends JFrame {
     private final JButton buttonUpload;
     private final JFileChooser fileChooser = new JFileChooser();
     private final JMenuBar menuBar;
-    private final JMenu optionsMenu;
+    private final JMenu menu;
+    private final JMenuItem optionsMenu;
+    private final JCheckBox serverCheck;
     private ResourceBundle rb;
 
     {
@@ -43,8 +44,10 @@ public class MainWindows extends JFrame {
         buttonUpload = new JButton(rb.getString("buttonUpload"));
         connectAddress.setText(Connect.getInstance().getName());
         connectPort.setText(Connect.getInstance().getPort());
+        serverCheck = new JCheckBox("server start");
+        menu = new JMenu("Menu");
         menuBar = new JMenuBar();
-        optionsMenu = new JMenu("Опции");
+        optionsMenu = new JMenuItem("Опции");
         iniMenu();
         this.setTitle("Transfer Elite");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +60,9 @@ public class MainWindows extends JFrame {
     private void iniMenu() {
         Font font = new Font("Verdana", Font.PLAIN, 12);
         optionsMenu.setFont(font);
-        menuBar.add(optionsMenu);
+        menu.add(optionsMenu);
+        menu.add(serverCheck);
+        menuBar.add(menu);
     }
 
     public MainWindows() {
@@ -140,21 +145,21 @@ public class MainWindows extends JFrame {
                 statusUpDown.setText(rb.getString("downloading") + " " + rb.getString("complete"));
             }
         });
-        optionsMenu.addMenuListener(new MenuListener() {
+        optionsMenu.addActionListener(new AbstractAction() {
             @Override
-            public void menuSelected(MenuEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 Controller.getInstance().getWindows().setVisible(false);
                 Controller.getInstance().startOptions();
             }
-
+        });
+        serverCheck.addActionListener(new AbstractAction() {
             @Override
-            public void menuDeselected(MenuEvent e) {
-
-            }
-
-            @Override
-            public void menuCanceled(MenuEvent e) {
-
+            public void actionPerformed(ActionEvent e) {
+                if (serverCheck.isSelected()) {
+                    EchoServer.getInstance().startServer();
+                } else {
+                    EchoServer.getInstance().stopServer();
+                }
             }
         });
     }
