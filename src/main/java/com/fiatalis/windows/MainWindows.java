@@ -116,7 +116,7 @@ public class MainWindows extends JFrame {
                 fileChooser.setMultiSelectionEnabled(true);
                 fileChooser.showOpenDialog(new JFileChooser());
                 File[] files = fileChooser.getSelectedFiles();
-                if (fileChooser.getName() == null) return;
+                System.out.println(files);
                 for (int i = 0; i < files.length; i++) {
                     while (Client.getInstance().isTransfer()) ;
                     try {
