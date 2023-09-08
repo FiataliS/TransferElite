@@ -52,7 +52,7 @@ public class Client {
         try {
             InetAddress inetAddress = InetAddress.getByName(Connect.getInstance().getName());
             if (!inetAddress.isReachable(1000)) return;
-        } catch (IOException e) {
+        } catch (IOException e){
         }
         try {
             socket = new Socket(Connect.getInstance().getName(), Integer.parseInt(Connect.getInstance().getPort()));
@@ -64,6 +64,10 @@ public class Client {
                 readThread.start();
             } else {
                 socket.close();
+            }
+        } catch (NumberFormatException e){
+            if (!skin) {
+                Utils.printConsole(rb.getString("errorConnect"), true);
             }
         } catch (IOException ioException) {
             if (!skin) {
