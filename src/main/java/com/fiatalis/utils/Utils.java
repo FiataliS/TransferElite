@@ -12,7 +12,6 @@ public class Utils {
         } else {
             System.out.print(result + " ");
         }
-
     }
 
 }
